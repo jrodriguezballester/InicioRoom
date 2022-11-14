@@ -1,0 +1,28 @@
+package com.example.farma4.database
+
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
+
+
+@Dao
+interface MedicinaDAO {
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertMedicina(medicina: Medicina): Long
+
+    @Update
+    suspend fun updateMedicina(medicina: Medicina): Int
+
+    @Delete
+    suspend fun deleteMedicina(medicina: Medicina): Int
+
+    @Query("DELETE FROM medicina_data_table")
+    suspend fun deleteAll(): Int
+
+    @Query("SELECT * FROM medicina_data_table")
+    fun getAllMedicinas(): Flow<List<Medicina>>
+
+    @Query("SELECT * FROM medicina_data_table")
+    fun getListMedicinas(): List<Medicina>
+
+}
