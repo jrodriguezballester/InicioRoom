@@ -8,6 +8,7 @@ import androidx.room.Room
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
+import com.example.farma4.database.MedicinaRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -16,6 +17,8 @@ import kotlinx.coroutines.withTimeoutOrNull
 
 class MainActivity : AppCompatActivity() {
     private lateinit var medicinaDAO: MedicinaDAO
+    private lateinit var medicinaRepo: MedicinaRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         medicinaDAO = db.medicinaDAO
+        medicinaRepo= MedicinaRepository(medicinaDAO)
         testDB()
 
     }
@@ -43,7 +47,9 @@ class MainActivity : AppCompatActivity() {
             Log.i("MyTAG", "*****     Inserted 3 medicinas       **********")
 
             //Query
-            val medicinas = medicinaDAO.getAllMedicinas()
+     //       val medicinas = medicinaDAO.getAllMedicinas()
+            val medicinas = medicinaRepo.medicinas
+
             Log.i("MyTAG", "*****    medicinas $medicinas  *****")
 
 
