@@ -23,23 +23,59 @@
             android:layout_margin="15dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:hint="Subscriber's name"
+            android:hint="Medicina name"
             android:inputType="textPersonName"
             android:text="@={myViewModel.inputName}"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/email_text"
+            android:id="@+id/dosis_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:ems="10"
-            android:hint="Subscriber's email"
+            android:hint="dosis"
             android:inputType="textPersonName"
-            android:text="@={myViewModel.inputEmail}"
+            android:text="@={myViewModel.inputDosis}"
             android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/unidadesCaja_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:hint="unidades por caja"
+            android:inputType="number"
+            android:text="@={myViewModel.inputUnidadesCaja}"
+
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/stock_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:ems="10"
+            android:hint="stock"
+            android:inputType="number"
+            android:text="@={myViewModel.inputStock}"
+            android:textStyle="bold" />
+<!--        <EditText-->
+<!--            android:id="@+id/name_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="15dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:ems="10"-->
+<!--            android:hint="Subscriber's name"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:text="@={myViewModel.inputName}"-->
+<!--            android:textStyle="bold" />-->
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,14 +98,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-
+                android:onClick="@{()->myViewModel.clearAllOrDelete()}"
+                android:text="@={myViewModel.clearAllOrDeleteButtonText}"
                 android:textSize="18sp"
                 android:textStyle="bold" />
         </LinearLayout>
 <!--        android:onClick="@{()->myViewModel.clearAllOrDelete()}"-->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subscriber_recyclerView"
+            android:id="@+id/medicina_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />

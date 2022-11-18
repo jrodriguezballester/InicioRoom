@@ -2,13 +2,18 @@ package com.example.farma4
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
 import com.example.farma4.database.MedicinaRepository
+import com.example.farma4.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -16,24 +21,66 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var medicinaDAO: MedicinaDAO
     private lateinit var medicinaRepo: MedicinaRepository
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var medicinaViewModel: MedicinaViewModel
+    private lateinit var adapter: MedicinaViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            MedicinaDatabase::class.java, "medicina_database"
-        )
-            .fallbackToDestructiveMigration()
-            .build()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        medicinaDAO = db.medicinaDAO
-        medicinaRepo= MedicinaRepository(medicinaDAO)
-        testDB()
+        val medicinaDAO = MedicinaDatabase.getInstance(application)!!.medicinaDAO
+        val medicinaRepository = MedicinaRepository(medicinaDAO)
+        val factory = MedicinaViewModelFactory(medicinaRepository)
 
+        medicinaViewModel = ViewModelProvider(this, factory).get(MedicinaViewModel::class.java)
+        binding.myViewModel = medicinaViewModel
+        binding.lifecycleOwner = this
+
+        medicinaViewModel.message.observe(this, Observer {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        initRecyclerView()
+
+//
+//        val db = Room.databaseBuilder(
+//            applicationContext,
+//            MedicinaDatabase::class.java, "medicina_database"
+//        )
+//            .fallbackToDestructiveMigration()
+//            .build()
+//
+//        medicinaDAO = db.medicinaDAO
+//        medicinaRepo= MedicinaRepository(medicinaDAO)
+//
+//        testDB()
+
+    }
+
+    private fun initRecyclerView() {
+        binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter =MedicinaViewAdapter({ selectedItem: Medicina -> listItemClicked(selectedItem) })
+        binding.medicinaRecyclerView.adapter = adapter
+        displayMedicinasList()
+    }
+
+    private fun displayMedicinasList() {
+        medicinaViewModel.getSavedMedicinas().observe(this) {
+            adapter.setList(it)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun listItemClicked(medicina: Medicina) {
+        Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
     }
 
     private fun testDB() {
@@ -47,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             Log.i("MyTAG", "*****     Inserted 3 medicinas       **********")
 
             //Query
-     //       val medicinas = medicinaDAO.getAllMedicinas()
+            //       val medicinas = medicinaDAO.getAllMedicinas()
             val medicinas = medicinaRepo.medicinas
 
             Log.i("MyTAG", "*****    medicinas $medicinas  *****")
