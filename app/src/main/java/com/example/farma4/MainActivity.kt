@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
         binding.myViewModel = medicinaViewModel
         binding.lifecycleOwner = this
 
-        medicinaViewModel.message.observe(this, Observer {
+        medicinaViewModel.message.observe(this) {
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
             }
-        })
+        }
 
         initRecyclerView()
 
@@ -67,20 +67,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter =MedicinaViewAdapter({ selectedItem: Medicina -> listItemClicked(selectedItem) })
+        adapter =MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.medicinaRecyclerView.adapter = adapter
         displayMedicinasList()
     }
 
     private fun displayMedicinasList() {
-        medicinaViewModel.getSavedMedicinas().observe(this) {
+        medicinaViewModel.getSavedMedicinas().observe(this,Observer {
             adapter.setList(it)
             adapter.notifyDataSetChanged()
-        }
+        })
     }
 
     private fun listItemClicked(medicina: Medicina) {
+        Log.i("MainActivity","pulsado")
         Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
+        medicinaViewModel.initUpdateAndDelete(medicina)
+
     }
 
     private fun testDB() {

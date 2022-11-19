@@ -2,6 +2,7 @@
 
 package com.example.farma4
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaRepository
@@ -17,10 +18,11 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
     val saveOrUpdateButtonText = MutableLiveData<String>()
     val clearAllOrDeleteButtonText = MutableLiveData<String>()
 
+    private var isUpdateOrDelete = false
+    private lateinit var medicinaToUpdateOrDelete: Medicina
+
     init {
-        // pasamos el texto del boton al cargar ¿xq no poner directo?
-        saveOrUpdateButtonText.value = "Save"
-        clearAllOrDeleteButtonText.value = "Clear All"
+        alternarTextButtons(true)
     }
 
     private val statusMessage = MutableLiveData<Event<String>>()
@@ -33,22 +35,65 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
     }
 
     fun saveOrUpdate() {
+        val name: String
+        val dosis: String
+        val unidadesCaja: Int
+        val stock: Int
 
         if (validar()) {
-            val name = inputName.value!!
-            val dosis = inputDosis.value!!
-            val unidadesCaja = inputUnidadesCaja.value!!.toInt()!!
-            val stock = inputUnidadesCaja.value!!.toInt()
+            name = inputName.value!!
+            dosis = inputDosis.value!!
+            unidadesCaja = inputUnidadesCaja.value!!.toInt()
+            stock = inputUnidadesCaja.value!!.toInt()
+            if (isUpdateOrDelete) {
+                medicinaToUpdateOrDelete.name = name
+                medicinaToUpdateOrDelete.dosis = dosis
+                medicinaToUpdateOrDelete.unidadesCaja = unidadesCaja
+                medicinaToUpdateOrDelete.stock = stock
 
-            insertMedicina(Medicina(name, dosis, unidadesCaja, stock))
+                updateMedicina(medicinaToUpdateOrDelete)
 
-            inputName.value = ""
-            inputDosis.value = ""
-            inputUnidadesCaja.value = ""
-            inputStock.value = ""
+            } else {
+                insertMedicina(Medicina(name, dosis, unidadesCaja, stock))
+                resetFormulario()
+            }
+        }
+    }
 
+    private fun updateMedicina(medicina: Medicina) {
+        Log.i(
+            "MedicinaViewModel",
+            "update ${medicina.name},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},"
+        )
+        viewModelScope.launch {
+            val rows = repository.update(medicina)
+            if (rows > 0) {
+                resetFormulario()
+                isUpdateOrDelete = false
+                alternarTextButtons(true)
+                statusMessage.value = Event("$rows Row Updated Successfully")
+            } else {
+                statusMessage.value = Event("Error to Updated")
+            }
+        }
+    }
+
+    private fun alternarTextButtons(inicio: Boolean) {
+        if (inicio) {
+            saveOrUpdateButtonText.value = "Save"
+            clearAllOrDeleteButtonText.value = "Clear All"
+        } else {
+            saveOrUpdateButtonText.value = "Actualizar"
+            clearAllOrDeleteButtonText.value = "Borrar"
         }
 
+    }
+
+    private fun resetFormulario() {
+        inputName.value = ""
+        inputDosis.value = ""
+        inputUnidadesCaja.value = ""
+        inputStock.value = ""
     }
 
     private fun validar(): Boolean {
@@ -79,14 +124,53 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
     }
 
     fun clearAllOrDelete() {
-        clearAll()
-    }
-    private fun clearAll() = viewModelScope.launch {
-        val noOfRowsDeleted = repository.deleteAll()
-        if (noOfRowsDeleted > 0) {
-            statusMessage.value = Event("$noOfRowsDeleted Subscribers Deleted Successfully")
-        } else {
-            statusMessage.value = Event("Error Occurred")
+        if(isUpdateOrDelete){
+            deleteMedicina(medicinaToUpdateOrDelete)
+        }else{
+            clearAll()
         }
+
+    }
+
+    private fun deleteMedicina(medicina: Medicina) {
+        Log.i(
+            "MedicinaViewModel",
+            "delete ${medicina.name},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},"
+        )
+        viewModelScope.launch {
+            val rows = repository.delete(medicina)
+            if (rows > 0) {
+                resetFormulario()
+                isUpdateOrDelete = false
+                alternarTextButtons(true)
+                statusMessage.value = Event("$rows Row Updated Successfully")
+            } else {
+                statusMessage.value = Event("Error to Updated")
+            }
+        }
+    }
+
+    private fun clearAll() {
+        viewModelScope.launch {
+            val noOfRowsDeleted = repository.deleteAll()
+            if (noOfRowsDeleted > 0) {
+                statusMessage.value = Event("$noOfRowsDeleted Subscribers Deleted Successfully")
+            } else {
+                statusMessage.value = Event("Error Occurred")
+            }
+        }
+    }
+
+    fun initUpdateAndDelete(medicina: Medicina) {
+        isUpdateOrDelete = true
+
+        alternarTextButtons(false)
+
+        inputName.value = medicina.name
+        inputDosis.value = medicina.dosis
+        inputStock.value = medicina.stock.toString()
+        inputUnidadesCaja.value = medicina.unidadesCaja.toString()
+
+        medicinaToUpdateOrDelete = medicina
     }
 }

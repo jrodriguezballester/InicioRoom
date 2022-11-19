@@ -39,6 +39,9 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
         binding.stockTextView.text = medicina.stock.toString()
         binding.unidadesCajaTextView.text = medicina.unidadesCaja.toString()
 
+        binding.listItemLayout.setOnClickListener {
+            clickListener(medicina)
+        }
     }
 
 }
