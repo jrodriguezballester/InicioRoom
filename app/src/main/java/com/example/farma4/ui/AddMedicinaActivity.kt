@@ -1,4 +1,4 @@
-package com.example.farma4
+package com.example.farma4.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.farma4.MedicinaViewAdapter
+import com.example.farma4.MedicinaViewModel
+import com.example.farma4.MedicinaViewModelFactory
+import com.example.farma4.R
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
@@ -20,7 +24,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 
-class MainActivity : AppCompatActivity() {
+class AddMedicinaActivity : AppCompatActivity() {
 
     private lateinit var medicinaDAO: MedicinaDAO
     private lateinit var medicinaRepo: MedicinaRepository
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter =MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
+        adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.medicinaRecyclerView.adapter = adapter
         displayMedicinasList()
     }
@@ -137,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun mostrarListado() {
         //Query
-        var medicinas2: List<Medicina>
+        val medicinas2: List<Medicina>
         medicinas2 = medicinaDAO.getListMedicinas()
         Log.i("MyTAG", "*****   ${medicinas2.size} medicinas there *****")
         medicinas2.forEach { medicina ->
