@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 
 class InicialViewModel() : ViewModel() {
     val cambioActivity = MutableLiveData<Int>()
-    var buttonToActivity1 = "Añadir Medicina"
-    var buttonToActivity2 = "Ver Listado Medicina"
-
+    var buttonToActivity1 = "Medicamentos"
+    var buttonToActivity2 = "Tratamiento"
+    var buttonToActivity3 = "Inventario"
     init {
         Log.i("InicialActivity", "viewmodel")
         cambioActivity.value = 0
@@ -22,10 +22,17 @@ class InicialViewModel() : ViewModel() {
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
 
     }
-    fun toListMedicinas() {
-        Log.i("InicialActivity", "pulsado List")
-        Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+
+    fun toTratamiento() {
+        Log.i("InicialActivity", "pulsado toTratamiento")
         cambioActivity.value = 2
+        Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+
+    }
+    fun toInventario() {
+        Log.i("InicialActivity", "pulsado toInventario()")
+        Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+        cambioActivity.value = 3
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
 
     }

@@ -13,10 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Farma4"
         tools:targetApi="31">
-
-
         <activity
-            android:name=".ui.MenuActivity"
+            android:name=".ui.ListaActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.InicialActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +35,7 @@
         </activity>
         <activity
             android:name=".ui.AddMedicinaActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

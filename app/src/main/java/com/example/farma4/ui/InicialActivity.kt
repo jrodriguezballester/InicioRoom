@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.farma4.R
 import com.example.farma4.databinding.ActivityInicialBinding
 
-class MenuActivity : AppCompatActivity() {
+class InicialActivity : AppCompatActivity() {
 
     private lateinit var inicialViewModel: InicialViewModel
 
@@ -31,14 +31,22 @@ class MenuActivity : AppCompatActivity() {
 
         inicialViewModel.cambioActivity.observe(this) {
             Log.i("MenuActivity", "valor: ${it}")
+          // medicamentos
             if (it == 1) {
                 Log.i("MenuActivity", "entra1: ${it}")
                 val intent = Intent(this, AddMedicinaActivity::class.java)
                 startActivity(intent)
             }
+            // Tratamiento
             if (it == 2) {
                 Log.i("MenuActivity", "entra2: ${it}")
-                val intent = Intent(this, AddMedicinaActivity::class.java)
+                val intent = Intent(this, ListaActivity::class.java)
+                startActivity(intent)
+            }
+            // Inventario
+            if (it == 3) {
+                Log.i("MenuActivity", "entra3: ${it}")
+                val intent = Intent(this, ListaActivity::class.java)
                 startActivity(intent)
             }
         }
