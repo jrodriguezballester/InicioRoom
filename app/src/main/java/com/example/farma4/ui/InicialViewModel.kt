@@ -9,6 +9,9 @@ class InicialViewModel() : ViewModel() {
     var buttonToActivity1 = "Medicamentos"
     var buttonToActivity2 = "Tratamiento"
     var buttonToActivity3 = "Inventario"
+    var buttonToActivity4 = "Añadir Stock"
+
+
     init {
         Log.i("InicialActivity", "viewmodel")
         cambioActivity.value = 0
@@ -20,7 +23,6 @@ class InicialViewModel() : ViewModel() {
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
         cambioActivity.value = 1
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
-
     }
 
     fun toTratamiento() {
@@ -34,6 +36,11 @@ class InicialViewModel() : ViewModel() {
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
         cambioActivity.value = 3
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
-
+    }
+    fun toAddStock() {
+        Log.i("InicialActivity", "pulsado toAddStock()")
+        Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+        cambioActivity.value = 4
+        Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
 }

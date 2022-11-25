@@ -15,11 +15,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16sp">
+        android:layout_margin="16sp"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/buttonToActivity1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,7 +28,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/buttonToActivity2"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -37,8 +36,8 @@
             android:text="@={myViewModel.buttonToActivity2}"
             android:textSize="18sp"
             android:textStyle="bold" />
+
         <Button
-            android:id="@+id/buttonToActivity3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,6 +45,17 @@
             android:text="@={myViewModel.buttonToActivity3}"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{()->myViewModel.toAddStock()}"
+            android:text="@={myViewModel.buttonToActivity4}"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
     </LinearLayout>
 
 
