@@ -24,10 +24,9 @@ class MedicinaViewAdapter(private val clickListener: (Medicina) -> Unit) :
 
     override fun getItemCount(): Int = medicinasList.size
 
-    fun setList(subscribers: List<Medicina>) {
+    fun setList(medicinaList: List<Medicina>) {
         medicinasList.clear()
-        medicinasList.addAll(subscribers)
-
+        medicinasList.addAll(medicinaList)
     }
 }
 

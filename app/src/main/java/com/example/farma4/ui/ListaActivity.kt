@@ -18,7 +18,7 @@ import com.example.farma4.databinding.ActivityListaBinding
 
 class ListaActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityListaBinding
+    private lateinit var binding: ActivityListaBinding
     private lateinit var adapter: MedicinaViewAdapter
     private lateinit var medicinaViewModel: MedicinaViewModel
 
@@ -32,11 +32,29 @@ class ListaActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista)
         medicinaViewModel = ViewModelProvider(this, factory).get(MedicinaViewModel::class.java)
-        initRecyclerView()
 
+        ////  initRecyclerView()
+        binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
+        binding.medicinaRecyclerView.adapter = adapter
+        /////
+
+
+        medicinaViewModel.getSavedMedicinas().observe(this) {
+            adapter.setList(it)
+            if (it.size == 0) {
+                volver()
+            }
+            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it}")
+            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it.size}")
+            adapter.notifyDataSetChanged()
+        }
     }
 
-
+    private fun volver() {
+        Log.i("MyTAG ", "volver")
+        displayMedicinasList()
+    }
 
     private fun initRecyclerView() {
         binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -48,12 +66,14 @@ class ListaActivity : AppCompatActivity() {
     private fun displayMedicinasList() {
         medicinaViewModel.getSavedMedicinas().observe(this) {
             adapter.setList(it)
+            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it}")
+            Log.i("MyTAG ", "displayMedicinasList3 :::::::${it.size}")
             adapter.notifyDataSetChanged()
         }
     }
 
     private fun listItemClicked(medicina: Medicina) {
-        Log.i("MainActivity","pulsado")
+        Log.i("MainActivity", "pulsado")
         Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
         medicinaViewModel.initUpdateAndDelete(medicina)
 

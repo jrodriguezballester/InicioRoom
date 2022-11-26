@@ -1,8 +1,10 @@
 package com.example.farma4.ui
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.farma4.database.MedicinaDatabase
 
 class InicialViewModel() : ViewModel() {
     val cambioActivity = MutableLiveData<Int>()
@@ -24,7 +26,6 @@ class InicialViewModel() : ViewModel() {
         cambioActivity.value = 1
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
-
     fun toTratamiento() {
         Log.i("InicialActivity", "pulsado toTratamiento")
         cambioActivity.value = 2
@@ -42,5 +43,10 @@ class InicialViewModel() : ViewModel() {
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
         cambioActivity.value = 4
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+    }
+    fun iniciarBD(context:Context) {
+        val medicinaDAO = MedicinaDatabase.getInstance(context)!!.medicinaDAO
+        Log.i("MenuActivity", "valor::${medicinaDAO}")
+
     }
 }
