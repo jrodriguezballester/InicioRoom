@@ -26,7 +26,7 @@ class InicialActivity : AppCompatActivity() {
         binding.myViewModel = inicialViewModel
         // LiveData needs the lifecycle owner
         binding.lifecycleOwner = this
-        inicialViewModel.iniciarBD(this)
+     //   inicialViewModel.iniciarBD(this)
         Log.i("MyTAG", "InicialActivity valor::${inicialViewModel.cambioActivity.value.toString()}")
 
         inicialViewModel.cambioActivity.observe(this) {
@@ -38,7 +38,6 @@ class InicialActivity : AppCompatActivity() {
                 2 -> startActivity<ListaActivity>()
                 // Inventario
                 3 -> startActivity<ListaActivity>()
-
 
             }
         }

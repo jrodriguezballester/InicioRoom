@@ -39,6 +39,7 @@ class AddMedicinaActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         medicinaDAO = MedicinaDatabase.getInstance(application)!!.medicinaDAO
+        Log.i("MyTAG", ": medicinaDAO::${medicinaDAO}")
         medicinaRepository = MedicinaRepository(medicinaDAO)
         val factory = MedicinaViewModelFactory(medicinaRepository)
 
@@ -51,17 +52,13 @@ class AddMedicinaActivity : AppCompatActivity() {
                 Toast.makeText(this, it, Toast.LENGTH_LONG).show()
             }
         }
-
         initRecyclerView()
-
     }
 
     private fun initRecyclerView() {
         binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.medicinaRecyclerView.adapter = adapter
-        val actualtDBPath = getDatabasePath("medicina_data_database.db").absolutePath
-        Log.i("MyTAG", ":::::::${actualtDBPath}")
         displayMedicinasList()
     }
 

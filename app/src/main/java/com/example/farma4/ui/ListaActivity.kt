@@ -15,6 +15,7 @@ import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaDatabase
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.databinding.ActivityListaBinding
+import kotlinx.coroutines.delay
 
 class ListaActivity : AppCompatActivity() {
 
@@ -33,27 +34,8 @@ class ListaActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lista)
         medicinaViewModel = ViewModelProvider(this, factory).get(MedicinaViewModel::class.java)
 
-        ////  initRecyclerView()
-        binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
-        binding.medicinaRecyclerView.adapter = adapter
-        /////
+         initRecyclerView()
 
-
-        medicinaViewModel.getSavedMedicinas().observe(this) {
-            adapter.setList(it)
-            if (it.size == 0) {
-                volver()
-            }
-            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it}")
-            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it.size}")
-            adapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun volver() {
-        Log.i("MyTAG ", "volver")
-        displayMedicinasList()
     }
 
     private fun initRecyclerView() {
@@ -66,8 +48,6 @@ class ListaActivity : AppCompatActivity() {
     private fun displayMedicinasList() {
         medicinaViewModel.getSavedMedicinas().observe(this) {
             adapter.setList(it)
-            Log.i("MyTAG ", "displayMedicinasList2 :::::::${it}")
-            Log.i("MyTAG ", "displayMedicinasList3 :::::::${it.size}")
             adapter.notifyDataSetChanged()
         }
     }

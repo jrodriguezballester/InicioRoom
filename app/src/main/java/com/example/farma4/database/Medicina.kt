@@ -3,6 +3,7 @@ package com.example.farma4.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 
 
 @Entity(tableName = "Medicina_data_table")
@@ -11,11 +12,13 @@ data class Medicina(
     @ColumnInfo(name = "name")
     var name: String,
     @ColumnInfo(name = "dosis")
-    var dosis: String,
+    var dosis: Int,
     @ColumnInfo(name = "unidadescaja")
     var unidadesCaja: Int,
     @ColumnInfo(name = "stock")
-    var stock: Int
+    var stock: Int,
+    @ColumnInfo(name = "fechaStock")
+    var fechaStock: Date
 
 )
 //{

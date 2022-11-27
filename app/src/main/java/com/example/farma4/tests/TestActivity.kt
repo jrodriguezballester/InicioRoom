@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
+import java.util.*
 
 class TestActivity : AppCompatActivity() {
     private lateinit var medicinaDAO: MedicinaDAO
@@ -24,7 +25,7 @@ class TestActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-   //     val medicinaDAO = MedicinaDatabase.getInstance(application)!!.medicinaDAO
+        //     val medicinaDAO = MedicinaDatabase.getInstance(application)!!.medicinaDAO
 
         val db = Room.databaseBuilder(
             applicationContext,
@@ -34,7 +35,7 @@ class TestActivity : AppCompatActivity() {
             .build()
 
         medicinaDAO = db.medicinaDAO
-        medicinaRepo= MedicinaRepository(medicinaDAO)
+        medicinaRepo = MedicinaRepository(medicinaDAO)
         val medicinaRepository = MedicinaRepository(medicinaDAO)
         val factory = MedicinaViewModelFactory(medicinaRepository)
 
@@ -43,13 +44,13 @@ class TestActivity : AppCompatActivity() {
     }
 
     private fun testDB() {
-
+        val fechaStock = Date() //todo puesto para poder continuar
         lifecycleScope.launch(Dispatchers.IO) {
             //Insert
             Log.i("MyTAG", "*****     Inserting 3 medicinas     **********")
-            medicinaDAO.insertMedicina(Medicina("qq", "1", 1, 30))
-            medicinaDAO.insertMedicina(Medicina("zz", "1", 1, 30))
-            medicinaDAO.insertMedicina(Medicina("aa", "1", 1, 30))
+            medicinaDAO.insertMedicina(Medicina("qq", 1, 1, 30, fechaStock))
+            medicinaDAO.insertMedicina(Medicina("zz", 1, 1, 30, fechaStock))
+            medicinaDAO.insertMedicina(Medicina("aa", 1, 1, 30, fechaStock))
             Log.i("MyTAG", "*****     Inserted 3 medicinas       **********")
 
             //Query
@@ -67,14 +68,14 @@ class TestActivity : AppCompatActivity() {
 
             //Update
             Log.i("MyTAG", "*****      Updating a medicina      **********")
-            medicinaDAO.updateMedicina(Medicina("aa", "1", 1, 300000))
+            medicinaDAO.updateMedicina(Medicina("aa", 1, 1, 3000, fechaStock))
 
             // Ver resultado
             mostrarListado()
 
             //delete
             Log.i("MyTAG", "*****       Deleting a medicina      **********")
-            medicinaDAO.deleteMedicina(Medicina("qq", "1", 1, 30))
+            medicinaDAO.deleteMedicina(Medicina("qq", 1, 1, 30, fechaStock))
 
             // Ver resultado
             mostrarListado()

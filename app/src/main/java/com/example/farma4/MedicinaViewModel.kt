@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel() {
 
@@ -36,13 +37,14 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
 
     fun saveOrUpdate() {
         val name: String
-        val dosis: String
+        val dosis: Int
         val unidadesCaja: Int
         val stock: Int
 
+        val fechaStock= Date() //todo puesto para poder continuar
         if (validar()) {
             name = inputName.value!!
-            dosis = inputDosis.value!!
+            dosis = inputDosis.value!!.toInt()
             unidadesCaja = inputUnidadesCaja.value!!.toInt()
             stock = inputUnidadesCaja.value!!.toInt()
             if (isUpdateOrDelete) {
@@ -50,11 +52,11 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
                 medicinaToUpdateOrDelete.dosis = dosis
                 medicinaToUpdateOrDelete.unidadesCaja = unidadesCaja
                 medicinaToUpdateOrDelete.stock = stock
-
+                medicinaToUpdateOrDelete.fechaStock = fechaStock
                 updateMedicina(medicinaToUpdateOrDelete)
 
             } else {
-                insertMedicina(Medicina(name, dosis, unidadesCaja, stock))
+                insertMedicina(Medicina(name, dosis, unidadesCaja, stock, fechaStock))
                 resetFormulario()
             }
         }
@@ -124,9 +126,9 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
     }
 
     fun clearAllOrDelete() {
-        if(isUpdateOrDelete){
+        if (isUpdateOrDelete) {
             deleteMedicina(medicinaToUpdateOrDelete)
-        }else{
+        } else {
             clearAll()
         }
 
@@ -167,7 +169,7 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
         alternarTextButtons(false)
 
         inputName.value = medicina.name
-        inputDosis.value = medicina.dosis
+        inputDosis.value = medicina.dosis.toString()
         inputStock.value = medicina.stock.toString()
         inputUnidadesCaja.value = medicina.unidadesCaja.toString()
 
