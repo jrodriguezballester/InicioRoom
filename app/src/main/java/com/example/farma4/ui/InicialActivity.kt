@@ -38,7 +38,8 @@ class InicialActivity : AppCompatActivity() {
                 2 -> startActivity<ListaActivity>()
                 // Inventario
                 3 -> startActivity<ListaActivity>()
-
+                // Inventario
+                4 -> startActivity<TratamientoActivity>()
             }
         }
     }

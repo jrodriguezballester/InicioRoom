@@ -7,6 +7,7 @@ import androidx.lifecycle.*
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaRepository
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel() {
@@ -15,6 +16,7 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
     val inputDosis = MutableLiveData<String>()
     val inputUnidadesCaja = MutableLiveData<String>()
     val inputStock = MutableLiveData<String>()
+    val inputFechaStock = MutableLiveData<String>()
 
     val saveOrUpdateButtonText = MutableLiveData<String>()
     val clearAllOrDeleteButtonText = MutableLiveData<String>()
@@ -37,30 +39,44 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
 
     fun saveOrUpdate() {
         val name: String
-        val dosis: Int
+        val principio:String
+        val dosis: String
         val unidadesCaja: Int
         val stock: Int
+        val fechaStockString: String
+        val fechaStockDate:Date
 
-        val fechaStock= Date() //todo puesto para poder continuar
+        //      val fechaStock= Date() //todo puesto para poder continuar
         if (validar()) {
             name = inputName.value!!
-            dosis = inputDosis.value!!.toInt()
+            principio = inputName.value!!//todo campo principio
+            dosis = inputDosis.value!!
             unidadesCaja = inputUnidadesCaja.value!!.toInt()
             stock = inputUnidadesCaja.value!!.toInt()
+            fechaStockString=inputFechaStock.value!!
+            fechaStockDate = stringToDate(fechaStockString)
+
             if (isUpdateOrDelete) {
                 medicinaToUpdateOrDelete.name = name
-                medicinaToUpdateOrDelete.dosis = dosis
+                medicinaToUpdateOrDelete.principio = principio
+                medicinaToUpdateOrDelete.dosis = dosis.toString()
                 medicinaToUpdateOrDelete.unidadesCaja = unidadesCaja
                 medicinaToUpdateOrDelete.stock = stock
-                medicinaToUpdateOrDelete.fechaStock = fechaStock
+                medicinaToUpdateOrDelete.fechaStock = fechaStockDate
                 updateMedicina(medicinaToUpdateOrDelete)
 
             } else {
-                insertMedicina(Medicina(name, dosis, unidadesCaja, stock, fechaStock))
+                insertMedicina(Medicina(name,principio, dosis, unidadesCaja, stock, fechaStockDate))
                 resetFormulario()
             }
         }
     }
+
+    private fun stringToDate(fechaStockString: String) =
+        SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(fechaStockString) as Date
+
+    private fun dateToString(fechaStock: Date) =
+        SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaStock)
 
     private fun updateMedicina(medicina: Medicina) {
         Log.i(
@@ -98,7 +114,7 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
         inputStock.value = ""
     }
 
-    private fun validar(): Boolean {
+    private fun validar(): Boolean { //todo falta validar correctamente
         var validado = false
         if (inputName.value.isNullOrEmpty()) {
             statusMessage.value = Event("Please enter medicina name")
@@ -108,6 +124,8 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
             statusMessage.value = Event("Please enter Unidades por Caja")
         } else if (inputStock.value.isNullOrEmpty()) {
             statusMessage.value = Event("Please enter Stock")
+        } else if (inputFechaStock.value.isNullOrEmpty()) {
+            statusMessage.value = Event("Please enter FechaStock")
         } else {
             validado = true
         }

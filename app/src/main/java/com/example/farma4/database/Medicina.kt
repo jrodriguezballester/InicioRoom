@@ -11,8 +11,10 @@ data class Medicina(
     @PrimaryKey
     @ColumnInfo(name = "name")
     var name: String,
+    @ColumnInfo(name = "principio")
+    var principio: String,
     @ColumnInfo(name = "dosis")
-    var dosis: Int,
+    var dosis: String,
     @ColumnInfo(name = "unidadescaja")
     var unidadesCaja: Int,
     @ColumnInfo(name = "stock")

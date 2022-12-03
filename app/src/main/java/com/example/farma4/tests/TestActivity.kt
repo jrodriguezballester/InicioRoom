@@ -45,41 +45,41 @@ class TestActivity : AppCompatActivity() {
 
     private fun testDB() {
         val fechaStock = Date() //todo puesto para poder continuar
-        lifecycleScope.launch(Dispatchers.IO) {
-            //Insert
-            Log.i("MyTAG", "*****     Inserting 3 medicinas     **********")
-            medicinaDAO.insertMedicina(Medicina("qq", 1, 1, 30, fechaStock))
-            medicinaDAO.insertMedicina(Medicina("zz", 1, 1, 30, fechaStock))
-            medicinaDAO.insertMedicina(Medicina("aa", 1, 1, 30, fechaStock))
-            Log.i("MyTAG", "*****     Inserted 3 medicinas       **********")
-
-            //Query
-            //       val medicinas = medicinaDAO.getAllMedicinas()
-            val medicinas = medicinaRepo.medicinas
-
-            Log.i("MyTAG", "*****    medicinas $medicinas  *****")
-
-
-            ////// mostrar el listado ////
-            mostrarListadoFlow1(medicinas)
-
-            // Ver resultado
-            mostrarListado()
-
-            //Update
-            Log.i("MyTAG", "*****      Updating a medicina      **********")
-            medicinaDAO.updateMedicina(Medicina("aa", 1, 1, 3000, fechaStock))
-
-            // Ver resultado
-            mostrarListado()
-
-            //delete
-            Log.i("MyTAG", "*****       Deleting a medicina      **********")
-            medicinaDAO.deleteMedicina(Medicina("qq", 1, 1, 30, fechaStock))
-
-            // Ver resultado
-            mostrarListado()
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            //Insert
+//            Log.i("MyTAG", "*****     Inserting 3 medicinas     **********")
+//            medicinaDAO.insertMedicina(Medicina("qq", 1, 1, 30, fechaStock))
+//            medicinaDAO.insertMedicina(Medicina("zz", 1, 1, 30, fechaStock))
+//            medicinaDAO.insertMedicina(Medicina("aa", 1, 1, 30, fechaStock))
+//            Log.i("MyTAG", "*****     Inserted 3 medicinas       **********")
+//
+//            //Query
+//            //       val medicinas = medicinaDAO.getAllMedicinas()
+//            val medicinas = medicinaRepo.medicinas
+//
+//            Log.i("MyTAG", "*****    medicinas $medicinas  *****")
+//
+//
+//            ////// mostrar el listado ////
+//            mostrarListadoFlow1(medicinas)
+//
+//            // Ver resultado
+//            mostrarListado()
+//
+//            //Update
+//            Log.i("MyTAG", "*****      Updating a medicina      **********")
+//            medicinaDAO.updateMedicina(Medicina("aa", 1, 1, 3000, fechaStock))
+//
+//            // Ver resultado
+//            mostrarListado()
+//
+//            //delete
+//            Log.i("MyTAG", "*****       Deleting a medicina      **********")
+//            medicinaDAO.deleteMedicina(Medicina("qq", 1, 1, 30, fechaStock))
+//
+//            // Ver resultado
+//            mostrarListado()
+//        }
     }
 
     private fun mostrarListadoFlow1(medicinas: Flow<List<Medicina>>) {

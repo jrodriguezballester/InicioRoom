@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="myViewModel"
-            type="com.example.farma4.MedicinaViewModel" />
+            type="com.example.farma4.ui.TratamientoViewModel" />
     </data>
 
     <LinearLayout
@@ -21,43 +20,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-
             android:ems="10"
             android:hint="Medicina name"
             android:inputType="textPersonName"
             android:text="@={myViewModel.inputName}"
             android:textStyle="bold" />
-
         <EditText
-            android:id="@+id/dosis_text"
+            android:id="@+id/principio_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:ems="10"
-            android:hint="dosis"
+            android:hint="Medicina principio activo"
             android:inputType="textPersonName"
-            android:text="@={myViewModel.inputDosis}"
+            android:text="@={myViewModel.inputPrincipio}"
             android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/unidadesCaja_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
-            android:ems="10"
-            android:hint="unidades por caja"
-            android:inputType="number"
-            android:text="@={myViewModel.inputUnidadesCaja}"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/dosis_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="dosis"
+                android:inputType="textPersonName"
+                android:text="@={myViewModel.inputDosis}"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/unidadesCaja_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:ems="10"
+                android:hint="unidades por caja"
+                android:inputType="number"
+                android:text="@={myViewModel.inputUnidadesCaja}"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="horizontal">
+
 
         <EditText
             android:id="@+id/stock_text"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="5dp"
             android:ems="10"
             android:hint="stock"
             android:inputType="number"
@@ -67,25 +81,14 @@
             android:id="@+id/fechaStock_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
             android:ems="10"
             android:hint="FechaStock"
-            android:inputType="number"
+            android:inputType="text"
             android:text="@={myViewModel.inputFechaStock}"
             android:textStyle="bold" />
-<!--        <EditText-->
-<!--            android:id="@+id/name_text"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="15dp"-->
-<!--            android:layout_marginBottom="5dp"-->
-<!--            android:ems="10"-->
-<!--            android:hint="Subscriber's name"-->
-<!--            android:inputType="textPersonName"-->
-<!--            android:text="@={myViewModel.inputName}"-->
-<!--            android:textStyle="bold" />-->
 
+</LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,27 +96,36 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/save_or_update_button"
+                android:id="@+id/save_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{()->myViewModel.saveOrUpdate()}"
-                android:text="@={myViewModel.saveOrUpdateButtonText}"
-                android:textSize="18sp"
+                android:onClick="@{()->myViewModel.save_button()}"
+                android:text="Guardar"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/clear_all_or_delete_button"
+                android:id="@+id/modificar_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:onClick="@{()->myViewModel.clearAllOrDelete()}"
-                android:text="@={myViewModel.clearAllOrDeleteButtonText}"
-                android:textSize="18sp"
+                android:onClick="@{()->myViewModel.update_button()}"
+                android:text="modificar"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:onClick="@{()->myViewModel.delete_button()}"
+                android:text="borrar"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
-<!--        android:onClick="@{()->myViewModel.clearAllOrDelete()}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/medicina_recyclerView"

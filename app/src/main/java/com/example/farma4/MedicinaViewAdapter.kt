@@ -43,8 +43,8 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
     fun bind(medicina: Medicina, clickListener: (Medicina) -> Unit) {
         val consumo= consumoDiario(medicina.dosis)
         val nuevoStock=calculoStock(medicina,consumo)
-        val formatter = SimpleDateFormat("dd-MM-yy")
-        val fecha = formatter.format(medicina.fechaStock)
+     //   val formatter = SimpleDateFormat("dd-MM-yy")
+        val fecha = dateToString(medicina.fechaStock)
 
         binding.nameTextView.text = medicina.name
         binding.dosisTextView.text = medicina.dosis.toString()
@@ -58,6 +58,9 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
             clickListener(medicina)
         }
     }
+
+    private fun dateToString(fechaStock: Date) =
+        SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaStock)
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun calculoStock(medicina: Medicina, consumo: Int): Int {
@@ -76,15 +79,15 @@ class MyViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(bindi
         return dias
     }
 
-    private fun consumoDiario(dosis: Int): Int {
-        val numberString: String = dosis.toString()
-        Log.i("MyTAG", "consumo ${numberString}::")
+    private fun consumoDiario(dosis: String): Int {
+   //     val numberString: String = dosis.toString()
+        Log.i("MyTAG", "consumo ${dosis}::")
         var consumo: Int = 0
-        for (num in numberString) {
+        for (num in dosis) {
             var sumar = num.digitToInt()
             // TODO Controlar medias dosis
             consumo = consumo + sumar
-            Log.i("MyTAG", "numero ${num}::${numberString}")
+            Log.i("MyTAG", "numero ${num}::${dosis}")
         }
         return consumo
     }
