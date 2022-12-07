@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Farma4</string>
+    <string name="dialog_start_game">Start game?</string>
+    <string name="dialog_message">mensaje</string>
+    <string name="dialog_title">Titulo</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="your_name">Your name</string>
 </resources>
