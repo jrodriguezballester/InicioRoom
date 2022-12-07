@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="primerNivel">28sp</dimen>
-    <dimen name="segundoNivel">21sp</dimen>
-    <dimen name="tercerNivel">20sp</dimen>
+    <dimen name="primerNivel">24sp</dimen>
+    <dimen name="segundoNivel">20sp</dimen>
+    <dimen name="tercerNivel">19sp</dimen>
 </resources>

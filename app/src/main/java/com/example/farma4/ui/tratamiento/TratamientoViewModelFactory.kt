@@ -1,8 +1,7 @@
-package com.example.farma4.ui
+package com.example.farma4.ui.tratamiento
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.farma4.MedicinaViewModel
 import com.example.farma4.database.MedicinaRepository
 import java.lang.IllegalArgumentException
 

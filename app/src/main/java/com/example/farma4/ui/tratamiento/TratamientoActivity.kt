@@ -1,15 +1,13 @@
-package com.example.farma4.ui
+package com.example.farma4.ui.tratamiento
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.farma4.MedicinaViewAdapter
 import com.example.farma4.R
 import com.example.farma4.database.Medicina
 import com.example.farma4.database.MedicinaDatabase
@@ -21,7 +19,8 @@ class TratamientoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTratamientoBinding
     private lateinit var tratamientoViewModel: TratamientoViewModel
-    private lateinit var adapter: MedicinaViewAdapter
+   // private lateinit var adapter: MedicinaViewAdapter
+    private lateinit var adapter: TratamientoViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,19 +41,19 @@ class TratamientoActivity : AppCompatActivity() {
         //Observar mensajes
         tratamientoViewModel.message.observe(this) { it ->
 
-            it.getContentIfNotHandled()?.let {its->
-                Log.i(
-                    "MyTAG",
-                    "toast ${its}"
-                )
+            it.getContentIfNotHandled()?.let { its ->
+                Log.i("MyTAG", "toast ${its}")
                 Toast.makeText(this, its, Toast.LENGTH_LONG).show()
             }
         }
         initRecyclerView()
     }
+
     private fun initRecyclerView() {
         binding.medicinaRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
+    //    adapter = MedicinaViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
+        adapter = TratamientoViewAdapter(this, { selectedItem: Medicina -> listItemClicked(selectedItem) })
+
         binding.medicinaRecyclerView.adapter = adapter
         displayMedicinasList()
     }

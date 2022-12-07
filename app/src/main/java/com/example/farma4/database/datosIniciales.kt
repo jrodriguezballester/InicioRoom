@@ -10,10 +10,10 @@ import java.util.*
 
 object fechaStock : Date() {
 
-    val dates = "20221127"
-
+    var dates = "20221127"
+    var dates1 = "20221206"
     @RequiresApi(Build.VERSION_CODES.O)
-    val fechaStock1 = LocalDate.parse(dates, DateTimeFormatter.BASIC_ISO_DATE)
+    var fechaStock1 = LocalDate.parse(dates, DateTimeFormatter.BASIC_ISO_DATE)
 
     @RequiresApi(Build.VERSION_CODES.O)
     var fechaStockDate = Date.from(fechaStock1.atStartOfDay(ZoneId.systemDefault()).toInstant())

@@ -10,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.farma4.R
 import com.example.farma4.databinding.ActivityInicialBinding
+import com.example.farma4.ui.inventario.InventarioActivity
+import com.example.farma4.ui.tratamiento.TratamientoActivity
 
 class InicialActivity : AppCompatActivity() {
 
@@ -37,7 +39,7 @@ class InicialActivity : AppCompatActivity() {
                 // Tratamiento
                 2 -> startActivity<ListaActivity>()
                 // Inventario
-                3 -> startActivity<ListaActivity>()
+                3 -> startActivity<InventarioActivity>()
                 // Inventario
                 4 -> startActivity<TratamientoActivity>()
             }

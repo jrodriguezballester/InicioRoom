@@ -1,4 +1,4 @@
-package com.example.farma4.ui
+package com.example.farma4.ui.tratamiento
 
 import android.util.Log
 import androidx.lifecycle.*
