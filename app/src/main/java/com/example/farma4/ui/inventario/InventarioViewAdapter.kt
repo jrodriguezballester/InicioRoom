@@ -12,11 +12,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
 import com.example.farma4.database.Medicina
-import com.example.farma4.databinding.ListItemHorizontalBinding
+import com.example.farma4.databinding.ListItemInventarioBinding
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InventarioViewAdapter (
+class InventarioViewAdapter(
     private val context: Context, private val clickListener: (Medicina) -> Unit
 ) : RecyclerView.Adapter<InventarioViewHolder>() {
     private val medicinasList = ArrayList<Medicina>()
@@ -28,8 +30,8 @@ class InventarioViewAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InventarioViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding: ListItemHorizontalBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.list_item_horizontal, parent, false)
+        val binding: ListItemInventarioBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.list_item_inventario, parent, false)
         return InventarioViewHolder(binding, parent.context)
     }
 
@@ -43,42 +45,66 @@ class InventarioViewAdapter (
 
 }
 
-class InventarioViewHolder(val binding: ListItemHorizontalBinding, val context: Context) :
+class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: Context) :
     RecyclerView.ViewHolder(binding.root) {
 
     @SuppressLint("ResourceAsColor")
     @RequiresApi(Build.VERSION_CODES.O)
     fun bind(medicina: Medicina, clickListener: (Medicina) -> Unit) {
 
-        val consumo = consumoDiario(medicina.dosis)
-        val nuevoStock = calculoStock(medicina, consumo)
-        val fecha = dateToString(medicina.fechaStock)
-        val cardColor: Int = calcularColor(consumo, nuevoStock)
+        val consumoDiario = calcularConsumoDiario(medicina.dosis)
+        val consumoSemanal: Double = (consumoDiario * 7)
+
+        val nuevoStock = calcularStock(medicina, consumoDiario)
+        var numSemanas: Double = nuevoStock / consumoSemanal
+        val fechaFinal: String = calcularDiasFinStock(consumoDiario, nuevoStock)
+
+        val cardColor: Int = calcularColor(consumoSemanal, nuevoStock, medicina)
 
         binding.cardView.setCardBackgroundColor(cardColor)
+
         binding.nameTextView.text = medicina.name
-        binding.dosisTextView.text = medicina.dosis.toString()
+        binding.principioText.text = medicina.principio
+
         binding.unidadesCajaTextView.text = medicina.unidadesCaja.toString()
 
         binding.stockTextView.text = nuevoStock.toString()
-        binding.consumoTextView.text = consumo.toString()
+        binding.consumoTextView.text = roundOffOneDecimal(consumoDiario)
+        binding.consumoSemanalTextView.text = roundOffZeroDecimal(consumoSemanal)
 
-        binding.fechaTextView.text = fecha
-
+        binding.numSemTextView.text = roundOffOneDecimal(numSemanas)
+        binding.fechaFinalTextView.text = fechaFinal
         binding.listItemLayout.setOnClickListener {
             clickListener(medicina)
         }
     }
 
-    private fun calcularColor(consumo: Int, stock: Int): Int {
-        var colorDeFondo: Int = ContextCompat.getColor(context, R.color.DarkGray)
 
-        if ((stock - (consumo * 7)) < 0) colorDeFondo =
-            ContextCompat.getColor(context, R.color.FireBrick)
-        if ((stock - (consumo * 7 * 2)) < 0) colorDeFondo =
-            ContextCompat.getColor(context, R.color.Peru)
-        if ((stock - (consumo * 7 * 3)) < 0) colorDeFondo =
-            ContextCompat.getColor(context, R.color.DarkSeaGreen)
+    private fun calcularDiasFinStock(consumoDiario: Double, nuevoStock: Int): String {
+        val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
+        var today = Date()
+        val calendar: Calendar = Calendar.getInstance()
+        calendar.time = today
+        calendar.add(Calendar.DATE, numDias)
+        val fechaFinal =dateToString(calendar.time)
+        return fechaFinal
+    }
+
+    private fun calcularColor(consumoSemanal: Double, stock: Int, medicina: Medicina): Int {
+        var colorDeFondo: Int
+        var numSemanas: Double = stock / consumoSemanal
+//        Log.i(
+//            "MyTAG",
+//            " ${medicina.name}::stock:${stock} consumoSemanal:${consumoSemanal}::numSemanas${numSemanas}"
+//        )
+        colorDeFondo = when (numSemanas) {
+
+            in 0.0..1.0 -> ContextCompat.getColor(context, R.color.BlueViolet)
+            in 1.0..2.0 -> ContextCompat.getColor(context, R.color.FireBrick)
+            in 2.0..3.0 -> ContextCompat.getColor(context, R.color.Peru)
+            in 3.0..4.0 -> ContextCompat.getColor(context, R.color.DarkSeaGreen)
+            else -> ContextCompat.getColor(context, R.color.DarkGray)
+        }
 
         return colorDeFondo
     }
@@ -86,14 +112,15 @@ class InventarioViewHolder(val binding: ListItemHorizontalBinding, val context: 
     private fun dateToString(fechaStock: Date) =
         SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaStock)
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun calculoStock(medicina: Medicina, consumo: Int): Int {
+    private fun calcularStock(medicina: Medicina, consumoDiario: Double): Int {
         val dias: Int = calculoPeriodoStock(medicina.fechaStock)
-        val consumido: Int = dias * consumo
-        val stock = medicina.stock - consumido
+        val stock: Int = medicina.stock - (dias * consumoDiario).toInt()
+        Log.i(
+            "MyTAG",
+            "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock ${stock}"
+        )
         return stock
     }
-
 
     private fun calculoPeriodoStock(fechaStock: Date): Int {
         val fechaFinal = Date()
@@ -102,17 +129,33 @@ class InventarioViewHolder(val binding: ListItemHorizontalBinding, val context: 
         return dias
     }
 
-    private fun consumoDiario(dosis: String): Int {
-        //     val numberString: String = dosis.toString()
-        Log.i("MyTAG", "consumo ${dosis}::")
-        var consumo: Int = 0
+    private fun calcularConsumoDiario(dosis: String): Double {
+        Log.i("MyTAG", "dosis ${dosis}::")
+        var numComprimidosDiarios: Double = 0.0
+        var numComprimidosDosis: Double
         for (num in dosis) {
-            var sumar = num.digitToInt()
-            // TODO Controlar medias dosis
-            consumo = consumo + sumar
-            Log.i("MyTAG", "numero ${num}::${dosis}")
+            numComprimidosDosis = if (num.digitToInt() == 5) 0.5 else num.digitToInt().toDouble()
+
+            numComprimidosDiarios += numComprimidosDosis
         }
-        return consumo
+  //      Log.i("MyTAG", "numComprimidosDiarios::${numComprimidosDiarios}")
+        return numComprimidosDiarios
     }
 
+    private fun roundOffOneDecimal(number: Double): String {
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number)
+    }
+
+    private fun roundOffZeroDecimal(number: Double): String {
+        val df = DecimalFormat("#")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(number)
+    }
+    private fun roundOffZeroDecimalDown(number: Double): String {
+        val df = DecimalFormat("#")
+        df.roundingMode = RoundingMode.DOWN
+        return df.format(number)
+    }
 }

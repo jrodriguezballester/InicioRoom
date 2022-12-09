@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardBackgroundColor="@android:color/holo_blue_dark"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:id="@+id/list_item_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/primerNivel" />
+
+                <TextView
+                    android:id="@+id/principio_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:text="Principio"
+                    android:textColor="@color/White"
+                    android:textSize="@dimen/primerNivel" />
+</RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Unidades:"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/segundoNivel" />
+
+                        <TextView
+                            android:id="@+id/unidadesCaja_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="30"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/tercerNivel" />
+             </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerInParent="true">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fecha:"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/segundoNivel" />
+
+                        <TextView
+                            android:id="@+id/fechaFinal_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="12-12-22"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/tercerNivel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stock:"
+
+                            android:textSize="@dimen/segundoNivel" />
+
+                        <TextView
+                            android:id="@+id/stock_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="12"
+                            android:layout_marginLeft="5dp"
+
+                            android:textSize="@dimen/tercerNivel" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Unidades"-->
+<!--                            android:textColor="@color/White"-->
+<!--                            android:textSize="@dimen/segundoNivel" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/unidadesCaja_text_view"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center_horizontal"-->
+<!--                            android:text="30"-->
+<!--                            android:textColor="@color/White"-->
+<!--                            android:textSize="@dimen/tercerNivel" />-->
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="xDia"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/segundoNivel" />
+
+                        <Space
+                            android:layout_width="@dimen/space"
+                            android:layout_height="wrap_content"
+                           />
+
+                        <TextView
+                            android:id="@+id/consumo_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="12"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/tercerNivel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="xSemana"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/segundoNivel" />
+                        <Space
+                            android:layout_width="@dimen/space"
+                            android:layout_height="10dp"
+                           />
+
+                        <TextView
+                            android:id="@+id/consumoSemanal_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="12"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/tercerNivel" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="numSemanas"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/segundoNivel" />
+                        <Space
+                            android:layout_width="@dimen/space"
+                            android:layout_height="10dp"
+                            />
+                        <TextView
+                            android:id="@+id/numSem_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="12"
+                            android:textColor="@color/White"
+                            android:textSize="@dimen/tercerNivel" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+</layout>

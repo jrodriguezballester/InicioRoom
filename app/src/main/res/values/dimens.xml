@@ -3,4 +3,5 @@
     <dimen name="primerNivel">24sp</dimen>
     <dimen name="segundoNivel">20sp</dimen>
     <dimen name="tercerNivel">19sp</dimen>
+    <dimen name="space">4dp</dimen>
 </resources>
