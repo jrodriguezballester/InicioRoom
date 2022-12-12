@@ -56,7 +56,7 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
         val consumoSemanal: Double = (consumoDiario * 7)
 
         val nuevoStock = calcularStock(medicina, consumoDiario)
-        var numSemanas: Double = nuevoStock / consumoSemanal
+        val numSemanas: Double = nuevoStock / consumoSemanal
         val fechaFinal: String = calcularDiasFinStock(consumoDiario, nuevoStock)
 
         val cardColor: Int = calcularColor(consumoSemanal, nuevoStock, medicina)
@@ -82,7 +82,7 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
 
     private fun calcularDiasFinStock(consumoDiario: Double, nuevoStock: Int): String {
         val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
-        var today = Date()
+        val today = Date()
         val calendar: Calendar = Calendar.getInstance()
         calendar.time = today
         calendar.add(Calendar.DATE, numDias)
@@ -91,8 +91,8 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
     }
 
     private fun calcularColor(consumoSemanal: Double, stock: Int, medicina: Medicina): Int {
-        var colorDeFondo: Int
-        var numSemanas: Double = stock / consumoSemanal
+        val colorDeFondo: Int
+        val numSemanas: Double = stock / consumoSemanal
 //        Log.i(
 //            "MyTAG",
 //            " ${medicina.name}::stock:${stock} consumoSemanal:${consumoSemanal}::numSemanas${numSemanas}"
@@ -147,7 +147,6 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
         df.roundingMode = RoundingMode.CEILING
         return df.format(number)
     }
-
     private fun roundOffZeroDecimal(number: Double): String {
         val df = DecimalFormat("#")
         df.roundingMode = RoundingMode.CEILING

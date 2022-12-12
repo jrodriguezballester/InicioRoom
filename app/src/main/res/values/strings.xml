@@ -6,4 +6,8 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="your_name">Your name</string>
+    <string name="desayuno">Desayuno</string>
+    <string name="comida">Comida</string>
+    <string name="cena">Cena</string>
+    <string name="resopon">Resopon</string>
 </resources>

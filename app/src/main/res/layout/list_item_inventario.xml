@@ -26,26 +26,29 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/name_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nombre"
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/primerNivel" />
 
-                <TextView
-                    android:id="@+id/principio_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Principio"
-                    android:textColor="@color/White"
-                    android:textSize="@dimen/primerNivel" />
-</RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/name_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/primerNivel" />
+
+                    <TextView
+                        android:id="@+id/principio_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Principio"
+                        android:textColor="@color/White"
+                        android:textSize="@dimen/primerNivel" />
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -55,6 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -70,12 +74,14 @@
                             android:text="30"
                             android:textColor="@color/White"
                             android:textSize="@dimen/tercerNivel" />
-             </LinearLayout>
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_centerInParent="true">
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -92,10 +98,11 @@
                             android:textColor="@color/White"
                             android:textSize="@dimen/tercerNivel" />
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginLeft="15dp"
                         android:orientation="horizontal">
 
@@ -111,8 +118,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="12"
                             android:layout_marginLeft="5dp"
+                            android:text="12"
 
                             android:textSize="@dimen/tercerNivel" />
                     </LinearLayout>
@@ -129,21 +136,21 @@
 
                         android:orientation="vertical">
 
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="Unidades"-->
-<!--                            android:textColor="@color/White"-->
-<!--                            android:textSize="@dimen/segundoNivel" />-->
+                        <!--                        <TextView-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:text="Unidades"-->
+                        <!--                            android:textColor="@color/White"-->
+                        <!--                            android:textSize="@dimen/segundoNivel" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/unidadesCaja_text_view"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_horizontal"-->
-<!--                            android:text="30"-->
-<!--                            android:textColor="@color/White"-->
-<!--                            android:textSize="@dimen/tercerNivel" />-->
+                        <!--                        <TextView-->
+                        <!--                            android:id="@+id/unidadesCaja_text_view"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_gravity="center_horizontal"-->
+                        <!--                            android:text="30"-->
+                        <!--                            android:textColor="@color/White"-->
+                        <!--                            android:textSize="@dimen/tercerNivel" />-->
                     </LinearLayout>
 
                     <LinearLayout
@@ -161,8 +168,7 @@
 
                         <Space
                             android:layout_width="@dimen/space"
-                            android:layout_height="wrap_content"
-                           />
+                            android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/consumo_text_view"
@@ -173,6 +179,7 @@
                             android:textColor="@color/White"
                             android:textSize="@dimen/tercerNivel" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -185,10 +192,10 @@
                             android:text="xSemana"
                             android:textColor="@color/White"
                             android:textSize="@dimen/segundoNivel" />
+
                         <Space
                             android:layout_width="@dimen/space"
-                            android:layout_height="10dp"
-                           />
+                            android:layout_height="10dp" />
 
                         <TextView
                             android:id="@+id/consumoSemanal_text_view"
@@ -199,6 +206,7 @@
                             android:textColor="@color/White"
                             android:textSize="@dimen/tercerNivel" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -211,10 +219,11 @@
                             android:text="numSemanas"
                             android:textColor="@color/White"
                             android:textSize="@dimen/segundoNivel" />
+
                         <Space
                             android:layout_width="@dimen/space"
-                            android:layout_height="10dp"
-                            />
+                            android:layout_height="10dp" />
+
                         <TextView
                             android:id="@+id/numSem_text_view"
                             android:layout_width="wrap_content"

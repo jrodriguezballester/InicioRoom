@@ -37,7 +37,7 @@ class InicialActivity : AppCompatActivity() {
                 // medicamentos
                 1 -> startActivity<AddMedicinaActivity>()
                 // Tratamiento
-                2 -> startActivity<ListaActivity>()
+                2 -> startActivity<TratamientoActivity>()
                 // Inventario
                 3 -> startActivity<InventarioActivity>()
                 // Inventario

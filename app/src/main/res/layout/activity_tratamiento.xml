@@ -7,7 +7,9 @@
             name="myViewModel"
             type="com.example.farma4.ui.tratamiento.TratamientoViewModel" />
     </data>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,122 +17,54 @@
         android:orientation="vertical"
         tools:context=".ui.AddMedicinaActivity">
 
-        <EditText
-            android:id="@+id/name_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:ems="10"
-            android:hint="Medicina name"
-            android:inputType="textPersonName"
-            android:text="@={myViewModel.inputName}"
-            android:textStyle="bold" />
-        <EditText
-            android:id="@+id/principio_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:ems="10"
-            android:hint="Medicina principio activo"
-            android:inputType="textPersonName"
-            android:text="@={myViewModel.inputPrincipio}"
-            android:textStyle="bold" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/dosis_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="dosis"
-                android:inputType="textPersonName"
-                android:text="@={myViewModel.inputDosis}"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/unidadesCaja_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:ems="10"
-                android:hint="unidades por caja"
-                android:inputType="number"
-                android:text="@={myViewModel.inputUnidadesCaja}"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:orientation="horizontal">
-
-
-        <EditText
-            android:id="@+id/stock_text"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="stock"
-            android:inputType="number"
-            android:text="@={myViewModel.inputStock}"
-            android:textStyle="bold" />
-        <EditText
-            android:id="@+id/fechaStock_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:ems="10"
-            android:hint="FechaStock"
-            android:inputType="text"
-            android:text="@={myViewModel.inputFechaStock}"
-            android:textStyle="bold" />
+            android:text="@string/desayuno"
+            android:textColor="@color/BlueViolet"
+            android:textSize="@dimen/primerNivel" />
 
-</LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/save_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{()->myViewModel.save_button()}"
-                android:text="Guardar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/modificar_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:onClick="@{()->myViewModel.update_button()}"
-                android:text="modificar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-            <Button
-                android:id="@+id/delete_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_weight="1"
-                android:onClick="@{()->myViewModel.delete_button()}"
-                android:text="borrar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/medicina_recyclerView"
+            android:id="@+id/desayuno_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comida"
+            android:textColor="@color/BlueViolet"
+            android:textSize="@dimen/primerNivel" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/comida_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cena"
+            android:textColor="@color/BlueViolet"
+            android:textSize="@dimen/primerNivel" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cena_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resopon"
+            android:textColor="@color/BlueViolet"
+            android:textSize="@dimen/primerNivel" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/resopon_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_margin="5dp" />
     </LinearLayout>
+</ScrollView>
 </layout>

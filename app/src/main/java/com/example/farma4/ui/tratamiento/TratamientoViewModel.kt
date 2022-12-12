@@ -1,6 +1,9 @@
 package com.example.farma4.ui.tratamiento
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.example.farma4.Event
 import com.example.farma4.database.Medicina
@@ -12,6 +15,7 @@ import java.util.*
 class TratamientoViewModel(private val repository: MedicinaRepository) : ViewModel() {
 
     private lateinit var medicina: Medicina
+    val deletedMedicina = ArrayList<Medicina>()
     private val statusMessage = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = statusMessage
 
@@ -21,6 +25,15 @@ class TratamientoViewModel(private val repository: MedicinaRepository) : ViewMod
     val inputUnidadesCaja = MutableLiveData<String>()
     val inputStock = MutableLiveData<String>()
     val inputFechaStock = MutableLiveData<String>()
+
+    val desayunoList: MutableList<Medicina> = mutableListOf<Medicina>()
+    val comidaList: MutableList<Medicina> = mutableListOf<Medicina>()
+    val cenaList: MutableList<Medicina> = mutableListOf<Medicina>()
+    val resoponList: MutableList<Medicina> = mutableListOf<Medicina>()
+
+
+
+
 
     fun getSavedMedicinas() = liveData {
         repository.medicinas.collect {
@@ -99,18 +112,11 @@ class TratamientoViewModel(private val repository: MedicinaRepository) : ViewMod
         }
     }
 
-    fun clickMedicina(medicina: Medicina) {
+    fun clickMedicina() {
+               //eliminarlo de las listas
+  //      val tratamientoActivity:TratamientoActivity=TratamientoActivity()
+//tratamientoActivity.desayunoMedicinasList2()
 
-        inputName.value = medicina.name
-        inputPrincipio.value = medicina.principio
-        inputDosis.value = medicina.dosis
-        inputStock.value = medicina.stock.toString()
-        inputUnidadesCaja.value = medicina.unidadesCaja.toString()
-        // transformar fecha
-        val fechaStockString: String = Utilidades.dateToString(medicina.fechaStock)
-        inputFechaStock.value = fechaStockString
-
-        this.medicina = medicina
     }
 
     private fun resetFormulario() {
@@ -155,4 +161,60 @@ class TratamientoViewModel(private val repository: MedicinaRepository) : ViewMod
         medicina.stock = inputStock.value!!.toInt()
         medicina.fechaStock = fechaStockDate
     }
+
+
+    fun withMultiChoiceList(medicina: Medicina, context: Context) {
+        var cero: String = "0"
+        var ceroChar = cero[0]
+        var indice = 0
+        var items = arrayOf("Desayuno", "Comida", "Cena", "Resopon")
+
+        for (num in medicina.dosis) {
+            indice += 1
+            if (num == ceroChar) {
+                when (indice) {
+                    1 -> items[indice - 1] = "-"
+                    2 -> items[indice - 1] = "-"
+                    3 -> items[indice - 1] = "-"
+                    4 -> items[indice - 1] = "-"
+                }
+            }
+        }
+
+
+        val selectedList = ArrayList<Int>()
+        val builder = AlertDialog.Builder(context)
+
+        builder.setTitle("This is list choice dialog box")
+        builder.setMultiChoiceItems(items, null)
+        { dialog, which, isChecked ->
+            if (isChecked) {
+                selectedList.add(which)
+            } else if (selectedList.contains(which)) {
+                selectedList.remove(Integer.valueOf(which))
+            }
+        }
+
+        builder.setPositiveButton("DONE") { dialogInterface, i ->
+            Log.i("Inventario", "pulsado OK -${selectedList}--------")
+
+            ArrayList<Medicina>().add(medicina)
+
+            val selectedStrings = ArrayList<String>()
+
+            for (j in selectedList.indices) {
+                selectedStrings.add(items[selectedList[j]])
+            }
+            Log.i("Inventario", "pulsado OK -${selectedStrings}--------")
+
+            Toast.makeText(
+                context,
+                "Items selected are: " + Arrays.toString(selectedStrings.toTypedArray()),
+                Toast.LENGTH_LONG
+            ).show()
+            clickMedicina()
+        }
+        builder.show()
+    }
+
 }
