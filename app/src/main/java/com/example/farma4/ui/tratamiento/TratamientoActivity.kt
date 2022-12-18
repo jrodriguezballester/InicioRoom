@@ -10,10 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.farma4.MyApp
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
-import com.example.farma4.database.MedicinaDatabase
-import com.example.farma4.database.MedicinaRepository
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityTratamientoBinding
 import java.util.*
 
@@ -36,9 +35,7 @@ class TratamientoActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tratamiento)
 
         // crear viewModel
-        val medicinaDAO = MedicinaDatabase.getInstance(application)!!.medicinaDAO
-        val repository = MedicinaRepository(medicinaDAO)
-        val factory = TratamientoViewModelFactory(repository)
+        val factory = TratamientoViewModelFactory(MyApp.medicinaRepository!!)
         ttoViewModel = ViewModelProvider(this, factory)[TratamientoViewModel::class.java]
 
         // vincular xml con viewmodel

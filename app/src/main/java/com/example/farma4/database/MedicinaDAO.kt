@@ -1,6 +1,7 @@
 package com.example.farma4.database
 
 import androidx.room.*
+import com.example.farma4.database.model.Medicina
 import kotlinx.coroutines.flow.Flow
 
 

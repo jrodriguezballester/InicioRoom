@@ -1,4 +1,4 @@
-package com.example.farma4.database
+package com.example.farma4.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -21,6 +21,8 @@ data class Medicina(
     var stock: Int,
     @ColumnInfo(name = "fechaStock")
     var fechaStock: Date
+//    FecIniTto
+//    FecFinTto
 
 )
 //{

@@ -12,17 +12,11 @@ open class Event<out T>(private val content: T) {
      */
     fun getContentIfNotHandled(): T? {
         return if (hasBeenHandled) {
-            Log.i(
-                "MyTAG",
-                "retorna null "
-            )
+            Log.i("MyTAG", "retorna null ")
             null
         } else {
             hasBeenHandled = true
-            Log.i(
-                "MyTAG",
-                "retorna content ${content} "
-            )
+            Log.i("MyTAG", "retorna content ${content} ")
             content
         }
     }

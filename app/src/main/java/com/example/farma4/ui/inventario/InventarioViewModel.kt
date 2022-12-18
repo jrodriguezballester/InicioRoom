@@ -3,7 +3,7 @@ package com.example.farma4.ui.inventario
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.farma4.Event
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaRepository
 import kotlinx.coroutines.launch
 

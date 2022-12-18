@@ -4,7 +4,7 @@ package com.example.farma4
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaRepository
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -49,7 +49,7 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
         //      val fechaStock= Date() //todo puesto para poder continuar
         if (validar()) {
             name = inputName.value!!
-            principio = inputName.value!!//todo campo principio
+            principio = inputName.value!! //todo
             dosis = inputDosis.value!!
             unidadesCaja = inputUnidadesCaja.value!!.toInt()
             stock = inputUnidadesCaja.value!!.toInt()

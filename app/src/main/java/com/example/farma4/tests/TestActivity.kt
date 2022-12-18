@@ -3,16 +3,13 @@ package com.example.farma4.tests
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import com.example.farma4.MedicinaViewModelFactory
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
 import com.example.farma4.database.MedicinaRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.*

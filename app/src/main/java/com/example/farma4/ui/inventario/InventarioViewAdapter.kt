@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemInventarioBinding
 import java.math.RoundingMode
 import java.text.DecimalFormat

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.medicamentos.MedicamentosActivity">
+
+    <data>
+        <variable
+            name="myViewModel"
+            type="com.example.farma4.ui.medicamentos.MedicamentosViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/formularioView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:ems="10"
+                android:hint="Medicina name"
+                android:inputType="textPersonName"
+                android:text="@={myViewModel.inputName}"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/principio_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:ems="10"
+                android:hint="Principio activo"
+                android:inputType="textPersonName"
+                android:text="@={myViewModel.inputPrincipio}"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/unidadesCaja_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:ems="10"
+                    android:hint="unidades por caja"
+                    android:inputType="number"
+                    android:text="@={myViewModel.inputUnidadesCaja}"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/dosis_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="dosis"
+                    android:inputType="textPersonName"
+                    android:text="@={myViewModel.inputDosis}"
+                    android:textStyle="bold" />
+
+    </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/fec_ini_tto_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:hint="fec_ini_tto_text"
+                android:inputType="date"
+                android:text="@={myViewModel.inputFecIniTtoString}"
+                android:textStyle="bold" />
+            <EditText
+                android:id="@+id/fec_fin_tto_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:ems="10"
+                android:hint="fec_fin_tto_text"
+                android:inputType="date"
+                android:text="@={myViewModel.inputFecFinTtoString}"
+                android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/stock_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="stock"
+                    android:inputType="number"
+                    android:text="@={myViewModel.inputStock}"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/fechaStock_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="FechaStock"
+                    android:inputType="number"
+                    android:text="@={myViewModel.inputFechaStock}"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/save_or_update_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:onClick="@{()->myViewModel.deleteButton()}"
+                    android:text="eliminar"
+                    />
+
+                <Button
+                    android:id="@+id/clear_all_or_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:onClick="@{()->myViewModel.saveButton()}"
+                    android:text="guardar"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/medtos_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fload_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/submit"
+                android:src="@drawable/ic_launcher_foreground" />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

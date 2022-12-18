@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.farma4.R
 import com.example.farma4.databinding.ActivityInicialBinding
 import com.example.farma4.ui.inventario.InventarioActivity
+import com.example.farma4.ui.medicamentos.MedicamentosActivity
 import com.example.farma4.ui.tratamiento.TratamientoActivity
 
 class InicialActivity : AppCompatActivity() {
@@ -35,7 +36,7 @@ class InicialActivity : AppCompatActivity() {
             Log.i("MyTAG", "valor: ${it}")
             when (it) {
                 // medicamentos
-                1 -> startActivity<AddMedicinaActivity>()
+                1 -> startActivity<MedicamentosActivity>()
                 // Tratamiento
                 2 -> startActivity<TratamientoActivity>()
                 // Inventario

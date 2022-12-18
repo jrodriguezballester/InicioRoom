@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,16 +13,22 @@ class Utilidades {
         fun stringToDate(fechaStockString: String) =
             SimpleDateFormat("dd-MM-yy", Locale.getDefault()).parse(fechaStockString) as Date
 
+        fun stringBarraToDate(fechaStockString: String) =
+            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).parse(fechaStockString) as Date
+
         fun dateToString(fechaStock: Date) =
             SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaStock)
+
+        fun dateToStringBarra(fechaStock: Date) =
+            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(fechaStock)
 
         fun calcularColor(context: Context, consumo: Double, stock: Int, medicina: Medicina): Int {
             val colorDeFondo: Int
             val numSemanas: Double = stock / (consumo * 7)
-        Log.i(
-            "MyTAG",
-            " ${medicina.name}::stock:${stock} consumo:${consumo}::numSemanas${numSemanas}"
-        )
+            Log.i(
+                "MyTAG",
+                " ${medicina.name}::stock:${stock} consumo:${consumo}::numSemanas${numSemanas}"
+            )
             colorDeFondo = when (numSemanas) {
 
                 in 0.0..1.0 -> ContextCompat.getColor(context, R.color.BlueViolet)
@@ -37,7 +43,7 @@ class Utilidades {
 
         fun calcularConsumoDiario(dosis: String): Double {
             Log.i("MyTAG", "dosis ${dosis}::")
-            var numComprimidosDiarios: Double = 0.0
+            var numComprimidosDiarios = 0.0
             var numComprimidosDosis: Double
             for (num in dosis) {
                 numComprimidosDosis =
@@ -67,4 +73,5 @@ class Utilidades {
         }
 
     }
+
 }

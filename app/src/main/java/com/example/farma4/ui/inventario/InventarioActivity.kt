@@ -8,10 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.farma4.MyApp
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
-import com.example.farma4.database.MedicinaDatabase
-import com.example.farma4.database.MedicinaRepository
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityInventarioBinding
 
 class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.InventarioDialogListener {
@@ -23,10 +22,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventario)
         Log.i("Inventario", "XXXXXX")
-
-        val medicinaDAO = MedicinaDatabase.getInstance(application).medicinaDAO
-        val medicinaRepository = MedicinaRepository(medicinaDAO)
-        val factory = InventarioViewModelFactory(medicinaRepository)
+        val factory = InventarioViewModelFactory(MyApp.medicinaRepository!!)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_inventario)
         inventarioViewModel = ViewModelProvider(this, factory).get(InventarioViewModel::class.java)
@@ -41,9 +37,10 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     }
 
     private fun initRecyclerView() {
-        binding.inventarioRecyclerView.layoutManager=LinearLayoutManager(this)
-        adapter= InventarioViewAdapter(this,{ selectedItem: Medicina -> listItemClicked(selectedItem) })
-        binding.inventarioRecyclerView.adapter=adapter
+        binding.inventarioRecyclerView.layoutManager = LinearLayoutManager(this)
+        adapter =
+            InventarioViewAdapter(this, { selectedItem: Medicina -> listItemClicked(selectedItem) })
+        binding.inventarioRecyclerView.adapter = adapter
         displayMedicinasList()
     }
 
@@ -54,7 +51,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     }
 
     private fun displayMedicinasList() {
-        inventarioViewModel.getSavedMedicinas().observe(this){
+        inventarioViewModel.getSavedMedicinas().observe(this) {
             adapter.setList(it)
             adapter.notifyDataSetChanged()
         }
@@ -64,9 +61,10 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
         val newFragment = InventarioDialogFragment(medicina)
         newFragment.show(supportFragmentManager, "game")
     }
+
     override fun onDialogPositiveClick(dialog: DialogFragment, numCajas: Int, medicina: Medicina) {
         Log.i("Inventario", "pulsado OK ${medicina.name}:${numCajas}")
-        inventarioViewModel.addCajas(numCajas,medicina)
+        inventarioViewModel.addCajas(numCajas, medicina)
     }
 
 }

@@ -11,11 +11,10 @@ import com.example.farma4.MedicinaViewAdapter
 import com.example.farma4.MedicinaViewModel
 import com.example.farma4.MedicinaViewModelFactory
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaDatabase
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.databinding.ActivityListaBinding
-import kotlinx.coroutines.delay
 
 class ListaActivity : AppCompatActivity() {
 

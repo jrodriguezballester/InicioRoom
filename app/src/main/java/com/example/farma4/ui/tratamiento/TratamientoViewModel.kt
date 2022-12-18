@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.*
 import com.example.farma4.Event
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.tests.Utilidades
 import kotlinx.coroutines.launch

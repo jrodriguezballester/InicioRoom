@@ -1,5 +1,7 @@
 package com.example.farma4.database
 
+import com.example.farma4.database.model.Medicina
+
 class MedicinaRepository(private val medicinaDAO: MedicinaDAO) {
 
     val medicinas = medicinaDAO.getAllMedicinas()

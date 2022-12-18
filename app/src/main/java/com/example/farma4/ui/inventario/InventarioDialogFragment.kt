@@ -7,7 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 
 class InventarioDialogFragment(private val medicina: Medicina) : DialogFragment() {
     // Use this instance of the interface to deliver action events

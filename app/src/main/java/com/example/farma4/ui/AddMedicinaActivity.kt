@@ -7,22 +7,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.farma4.MedicinaViewAdapter
 import com.example.farma4.MedicinaViewModel
 import com.example.farma4.MedicinaViewModelFactory
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.databinding.ActivityMainBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeoutOrNull
 
 class AddMedicinaActivity : AppCompatActivity() {
 

@@ -2,6 +2,7 @@ package com.example.farma4.database
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.example.farma4.database.model.Medicina
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

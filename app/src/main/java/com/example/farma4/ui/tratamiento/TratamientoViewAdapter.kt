@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
-import com.example.farma4.database.Medicina
+import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemTratamientoBinding
 import com.example.farma4.tests.Utilidades
 import java.util.*
