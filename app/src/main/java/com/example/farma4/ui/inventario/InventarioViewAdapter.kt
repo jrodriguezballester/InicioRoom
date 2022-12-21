@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemInventarioBinding
+import com.example.farma4.tests.Utilidades
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -56,11 +57,12 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
         val consumoSemanal: Double = (consumoDiario * 7)
 
         val nuevoStock = calcularStock(medicina, consumoDiario)
+
         val numSemanas: Double = nuevoStock / consumoSemanal
         val fechaFinal: String = calcularDiasFinStock(consumoDiario, nuevoStock)
 
-        val cardColor: Int = calcularColor(consumoSemanal, nuevoStock, medicina)
-
+     //   val cardColor: Int = calcularColor(consumoSemanal, nuevoStock, medicina)
+        val cardColor: Int = Utilidades.calcularColor(context,consumoDiario,nuevoStock,medicina)
         binding.cardView.setCardBackgroundColor(cardColor)
 
         binding.nameTextView.text = medicina.name

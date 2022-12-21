@@ -5,6 +5,7 @@ import com.example.farma4.database.model.Medicina
 class MedicinaRepository(private val medicinaDAO: MedicinaDAO) {
 
     val medicinas = medicinaDAO.getAllMedicinas()
+    val medicinasOrderByFecFinTto = medicinaDAO.getAllMedicinasByFecFinTto()
 
     suspend fun insert(medicina: Medicina): Long {
         return medicinaDAO.insertMedicina(medicina)

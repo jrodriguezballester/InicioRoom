@@ -34,8 +34,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nombre"
+                        android:textStyle="bold"
                         android:textColor="@color/White"
-                        android:textSize="@dimen/medioNivel" />
+                        android:textSize="@dimen/primerNivel" />
 
                     <TextView
                         android:id="@+id/principio_text"

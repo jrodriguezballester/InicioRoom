@@ -42,7 +42,7 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
      * Obtiene la lista de medicinas de la BD
      */
     fun getSavedMedicinas() = liveData {
-        repository.medicinas.collect {
+        repository.medicinasOrderByFecFinTto.collect {
             emit(it)
         }
     }
@@ -56,7 +56,8 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         inputUnidadesCaja.value = medicina.unidadesCaja.toString()
         inputStock.value = medicina.stock.toString()
         inputFechaStock.value = Utilidades.dateToStringBarra(medicina.fechaStock)
-
+        inputFecIniTtoString.value = Utilidades.dateToStringBarra((medicina.FecIniTto))
+        inputFecFinTtoString.value = Utilidades.dateToStringBarra((medicina.FecFinTto))
     }
 
     fun resetForm() {
@@ -74,14 +75,12 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         // Comprobar los campos
         if (isAllEnter()) {
             // recoger formulario
-            medForm = getValueForm()
-            Log.i("MedicinaViewModel", "clickado ${clickado}")
+            medicina = getValueForm()
+
             // Guardar en BD
             if (clickado) {
-                medicina = MapperImpl.MedFormTOMedicina(medForm, medClicked)
                 updateMedicina(medicina)
             } else {
-                medicina = MapperImpl.MedFormTOMedicina(medForm)
                 insertMedicina(medicina)
             }
             clickado = false
@@ -105,7 +104,7 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
      * Crea medForm con los valores del formulario
      * (8 campos)
      */
-    private fun getValueForm(): MedForm {
+    private fun getValueForm(): Medicina {
 
         Log.i("MyTAG", "isAllEnter() ${isAllEnter()}")
 
@@ -118,7 +117,7 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         val stock: Int = inputDosis.value!!.toInt()
         val fecStoch: Date = fecStockDate.value!!
 
-        return MedForm(name, principio, dosis, unidadesCaja, fecIniTto, fecFinTto, stock, fecStoch)
+        return Medicina(name, principio, dosis, unidadesCaja, stock, fecStoch, fecIniTto, fecFinTto)
     }
 
     /**

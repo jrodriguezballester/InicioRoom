@@ -10,17 +10,17 @@ import java.util.*
 
 class Utilidades {
     companion object {
-        fun stringToDate(fechaStockString: String) =
-            SimpleDateFormat("dd-MM-yy", Locale.getDefault()).parse(fechaStockString) as Date
+        fun stringToDate(fechaString: String) =
+            SimpleDateFormat("dd-MM-yy", Locale.getDefault()).parse(fechaString) as Date
 
-        fun stringBarraToDate(fechaStockString: String) =
-            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).parse(fechaStockString) as Date
+        fun stringBarraToDate(fechaString: String) =
+            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).parse(fechaString) as Date
 
-        fun dateToString(fechaStock: Date) =
-            SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaStock)
+        fun dateToString(fechaDate: Date) =
+            SimpleDateFormat("dd-MM-yy", Locale.getDefault()).format(fechaDate)
 
-        fun dateToStringBarra(fechaStock: Date) =
-            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(fechaStock)
+        fun dateToStringBarra(fechaDate: Date) =
+            SimpleDateFormat("dd/MM/yy", Locale.getDefault()).format(fechaDate)
 
         fun calcularColor(context: Context, consumo: Double, stock: Int, medicina: Medicina): Int {
             val colorDeFondo: Int
@@ -31,10 +31,10 @@ class Utilidades {
             )
             colorDeFondo = when (numSemanas) {
 
-                in 0.0..1.0 -> ContextCompat.getColor(context, R.color.BlueViolet)
-                in 1.0..2.0 -> ContextCompat.getColor(context, R.color.FireBrick)
-                in 2.0..3.0 -> ContextCompat.getColor(context, R.color.Peru)
-                in 3.0..4.0 -> ContextCompat.getColor(context, R.color.DarkSeaGreen)
+                in 0.0..1.0 -> ContextCompat.getColor(context, R.color.FireBrick)
+                in 1.0..2.0 -> ContextCompat.getColor(context, R.color.Brown)
+                in 2.0..3.0 -> ContextCompat.getColor(context, R.color.Gold)
+                in 3.0..4.0 -> ContextCompat.getColor(context, R.color.LimeGreen)
                 else -> ContextCompat.getColor(context, R.color.DarkGray)
             }
 
@@ -70,6 +70,19 @@ class Utilidades {
             val dias = ((fechaFinal.time - fechaStock.time) / 86400000).toInt()
             Log.i("MyTAG", "Hay $dias dias de diferencia")
             return dias
+        }
+
+        fun calcularColorTto(context: Context, dias: Long): Int {
+            val colorDeFondo: Int
+            colorDeFondo = when (dias) {
+
+                in 0..30 -> ContextCompat.getColor(context, R.color.FireBrick)
+                in 31..70 -> ContextCompat.getColor(context, R.color.Gold)
+                in 71..100 -> ContextCompat.getColor(context, R.color.LimeGreen)
+                else -> ContextCompat.getColor(context, R.color.DarkGray)
+            }
+
+            return colorDeFondo
         }
 
     }

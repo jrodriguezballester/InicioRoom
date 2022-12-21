@@ -12,6 +12,7 @@ import com.example.farma4.R
 import com.example.farma4.databinding.ActivityInicialBinding
 import com.example.farma4.ui.inventario.InventarioActivity
 import com.example.farma4.ui.medicamentos.MedicamentosActivity
+import com.example.farma4.ui.prescripcion.PrescripcionActivity
 import com.example.farma4.ui.tratamiento.TratamientoActivity
 
 class InicialActivity : AppCompatActivity() {
@@ -42,7 +43,7 @@ class InicialActivity : AppCompatActivity() {
                 // Inventario
                 3 -> startActivity<InventarioActivity>()
                 // Inventario
-                4 -> startActivity<TratamientoActivity>()
+                4 -> startActivity<PrescripcionActivity>()
             }
         }
     }

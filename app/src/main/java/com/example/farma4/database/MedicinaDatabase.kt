@@ -10,13 +10,15 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.farma4.database.model.Medicina
+
+import com.example.farma4.database.model.MedicinaDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 //
-@Database(entities = [Medicina::class], version = 5, exportSchema = false)
+@Database(entities = [Medicina::class], version = 6, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class MedicinaDatabase : RoomDatabase() {
     abstract val medicinaDAO: MedicinaDAO

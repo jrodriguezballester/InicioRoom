@@ -52,7 +52,10 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
 
     private fun displayMedicinasList() {
         inventarioViewModel.getSavedMedicinas().observe(this) {
-            adapter.setList(it)
+
+            var mylist=   it.sortedBy { it.name}
+            adapter.setList(mylist)
+
             adapter.notifyDataSetChanged()
         }
     }

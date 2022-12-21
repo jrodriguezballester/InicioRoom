@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "Medicina_data_table")
-data class Medicina(
+data class MedicinaDB(
     @PrimaryKey
     @ColumnInfo(name = "name")
     var name: String,
@@ -24,5 +24,7 @@ data class Medicina(
     var FecIniTto: Date,
     @ColumnInfo(name = "FecFinTto")
     var FecFinTto: Date
+//    FecIniTto
+//    FecFinTto
 
 )

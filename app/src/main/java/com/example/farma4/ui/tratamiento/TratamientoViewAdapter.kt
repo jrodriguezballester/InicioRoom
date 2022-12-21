@@ -52,6 +52,7 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
 
         binding.cardView.setCardBackgroundColor(cardColor)
         binding.nameTextView.text = medicina.name
+
         binding.dosisTextView.text = medicina.dosis
         binding.principioText.text = medicina.principio
 

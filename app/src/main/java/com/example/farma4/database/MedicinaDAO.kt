@@ -23,6 +23,9 @@ interface MedicinaDAO {
     @Query("SELECT * FROM medicina_data_table")
     fun getAllMedicinas(): Flow<List<Medicina>>
 
+    @Query("SELECT * FROM medicina_data_table ORDER BY FecFinTto ASC")
+    fun getAllMedicinasByFecFinTto(): Flow<List<Medicina>>
+
     @Query("SELECT * FROM medicina_data_table")
     fun getListMedicinas(): List<Medicina>
 

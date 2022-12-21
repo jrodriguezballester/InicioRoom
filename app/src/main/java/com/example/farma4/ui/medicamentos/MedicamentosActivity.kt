@@ -71,7 +71,6 @@ class MedicamentosActivity : AppCompatActivity() {
         medicamentosViewModel.getSavedMedicinas().observe(this, Observer {
             adapter.setList(it)
             adapter.notifyDataSetChanged()
-        //    medicamentosViewModel.listadoMedicamentos=it
         })
     }
 

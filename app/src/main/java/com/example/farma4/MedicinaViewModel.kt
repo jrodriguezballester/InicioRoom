@@ -66,7 +66,7 @@ class MedicinaViewModel(private val repository: MedicinaRepository) : ViewModel(
                 updateMedicina(medicinaToUpdateOrDelete)
 
             } else {
-                insertMedicina(Medicina(name,principio, dosis, unidadesCaja, stock, fechaStockDate))
+       //         insertMedicina(Medicina(name,principio, dosis, unidadesCaja, stock, fechaStockDate))
                 resetFormulario()
             }
         }

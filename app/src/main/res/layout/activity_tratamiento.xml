@@ -18,6 +18,7 @@
         tools:context=".ui.AddMedicinaActivity">
 
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/desayuno"
@@ -31,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comida"
@@ -42,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cena"
@@ -55,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp" />
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resopon"
