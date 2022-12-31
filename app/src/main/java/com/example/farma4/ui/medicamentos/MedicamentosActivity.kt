@@ -44,6 +44,12 @@ class MedicamentosActivity : AppCompatActivity() {
             }
         }
 
+        medicamentosViewModel.numberLabelError.observe(this){it->
+            when (it) {
+                1 ->  binding.textInputName.setError(medicamentosViewModel.messageError.value)
+            }
+        }
+
         //Ocultar Formulario
         binding.formularioView.visibility = View.GONE
 
@@ -80,7 +86,12 @@ class MedicamentosActivity : AppCompatActivity() {
         binding.formularioView.visibility = View.VISIBLE
         medicamentosViewModel.medClicked=medicina
         medicamentosViewModel.clickado=true
-        medicamentosViewModel.rellenarFormConDatos(medicina)
+ //       var msg="enter name"
+//        if (medicamentosViewModel.inputName.value==null){
+//            binding.textInputName.setError(msg);
+//        //    textInputLayout.setErrorEnabled(msg != null);
+//        }
+       medicamentosViewModel.rellenarFormConDatos(medicina)
 
     }
 }

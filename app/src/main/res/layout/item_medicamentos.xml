@@ -166,7 +166,6 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
                         android:orientation="horizontal">
                         <TextView
                             android:layout_width="wrap_content"
@@ -184,18 +183,22 @@
                             android:textSize="@dimen/segundoNivel"
                             tools:text="12" />
                     </LinearLayout>
-
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_alignParentEnd="true"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="fecha fin Tto"
+                            android:text="Fin Receta"
                             android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:textColor="@color/White"
                             android:textSize="@dimen/segundoNivel" />
 
@@ -209,7 +212,7 @@
                             android:textSize="@dimen/tercerNivel"
                             tools:text="12/12/12" />
                     </LinearLayout>
-
+</RelativeLayout>
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">

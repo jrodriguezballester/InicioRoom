@@ -11,6 +11,7 @@ import com.example.farma4.tests.Utilidades
 import kotlinx.coroutines.launch
 import java.util.*
 
+
 class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
 
 
@@ -19,6 +20,11 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
     lateinit var medClicked: Medicina
     private val _mensaje = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = _mensaje
+
+    var numberLabelError = MutableLiveData<Int>()
+    private val _mensajeError = MutableLiveData<String>()
+    val messageError: LiveData<String> = _mensajeError
+
 
     val inputName = MutableLiveData<String>()
     val inputDosis = MutableLiveData<String>()
@@ -128,9 +134,11 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         Log.i("MyTAG", "... isAllEnter ")
         var validado = false
         // Validando entrada datos
-        if (inputName.value.isNullOrEmpty()) _mensaje.value =
-            Event("Please enter name")
-        else if (inputPrincipio.value.isNullOrEmpty()) _mensaje.value =
+        if (inputName.value.isNullOrEmpty()) {
+            _mensaje.value = Event("Please enter name")
+            _mensajeError.value="Please enter name"
+            numberLabelError.value = 1
+        } else if (inputPrincipio.value.isNullOrEmpty()) _mensaje.value =
             Event("Please enter principio")
         else if (inputUnidadesCaja.value.isNullOrEmpty()) _mensaje.value =
             Event("Please enter Unidades por Caja")
@@ -179,6 +187,33 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
 
         return validado
     }
+//    fun validate(view: View?) {
+//        var mailError: String? = null
+//        if (TextUtils.isEmpty(editTextEmail.getText())) {
+//            mailError = getString(R.string.mandatory)
+//        }
+//        toggleTextInputLayoutError(textInputEmail, mailError)
+//        var passError: String? = null
+//        if (TextUtils.isEmpty(editTextPassword.getText())) {
+//            passError = getString(R.string.mandatory)
+//        }
+//        toggleTextInputLayoutError(textInputPassword, passError)
+//        clearFocus()
+//    }
+//
+//    /**
+//     * Display/hides TextInputLayout error.
+//     *
+//     * @param msg the message, or null to hide
+//     */
+//    private fun toggleTextInputLayoutError(
+//        textInputLayout: TextInputLayout,
+//        msg: String?
+//    ) {
+//        textInputLayout.error = msg
+//        textInputLayout.isErrorEnabled = msg != null
+//    }
+
 
     private fun insertMedicina(medicina: Medicina) {
         viewModelScope.launch {

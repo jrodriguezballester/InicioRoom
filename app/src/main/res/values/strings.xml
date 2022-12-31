@@ -11,4 +11,6 @@
     <string name="cena">Cena</string>
     <string name="resopon">Resopon</string>
     <string name="submit">add</string>
+    <string name="fec_ini_tto">fecha inicio tratamiento</string>
+    <string name="fec_fin_tto">fecha fin tratamiento</string>
 </resources>

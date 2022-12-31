@@ -31,8 +31,8 @@ class Utilidades {
             )
             colorDeFondo = when (numSemanas) {
 
-                in 0.0..1.0 -> ContextCompat.getColor(context, R.color.FireBrick)
-                in 1.0..2.0 -> ContextCompat.getColor(context, R.color.Brown)
+                in 0.0..1.0 -> ContextCompat.getColor(context, R.color.Red)
+                in 1.0..2.0 -> ContextCompat.getColor(context, R.color.Red)
                 in 2.0..3.0 -> ContextCompat.getColor(context, R.color.Gold)
                 in 3.0..4.0 -> ContextCompat.getColor(context, R.color.LimeGreen)
                 else -> ContextCompat.getColor(context, R.color.DarkGray)

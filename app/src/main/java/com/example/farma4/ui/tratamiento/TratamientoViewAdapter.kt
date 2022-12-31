@@ -1,10 +1,12 @@
 package com.example.farma4.ui.tratamiento
 
-import android.annotation.SuppressLint
+
 import android.content.Context
 import android.os.Build
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout.LayoutParams
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,7 @@ import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemTratamientoBinding
 import com.example.farma4.tests.Utilidades
 import java.util.*
+
 
 class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
     RecyclerView.Adapter<TratamientoViewHolder>() {
@@ -23,6 +26,7 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
         medicinasList.clear()
         medicinasList.addAll(medicinaList)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TratamientoViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemTratamientoBinding =
@@ -32,6 +36,7 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TratamientoViewHolder, position: Int) {
+
         holder.bind(medicinasList[position], clickListener)
     }
 
@@ -41,10 +46,10 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
 
 class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context: Context) :
     RecyclerView.ViewHolder(binding.root) {
+    private var isFirstItem: Boolean = true
 
-    @SuppressLint("ResourceAsColor")
-    @RequiresApi(Build.VERSION_CODES.O)
     fun bind(medicina: Medicina, clickListener: (Medicina) -> Unit) {
+        if (isFirstItem) dimensionarItem()
 
         val consumo = Utilidades.calcularConsumoDiario(medicina.dosis)
         val nuevoStock = Utilidades.calcularStock(medicina, consumo)
@@ -52,7 +57,6 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
 
         binding.cardView.setCardBackgroundColor(cardColor)
         binding.nameTextView.text = medicina.name
-
         binding.dosisTextView.text = medicina.dosis
         binding.principioText.text = medicina.principio
 
@@ -61,6 +65,17 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
         }
     }
 
+    private fun dimensionarItem() {
+        isFirstItem=false
+        val displayMetrics: DisplayMetrics = context.resources.displayMetrics
+        val screenWidth = displayMetrics.widthPixels
+        val cardViewWidth = (screenWidth - 150) / 2
+
+        val params = LayoutParams(cardViewWidth, LayoutParams.WRAP_CONTENT)
+        params.bottomMargin = 30  //pixels 10dp=50pixels
+        params.width = cardViewWidth
+        binding.linearlayout1.layoutParams = params
+    }
 
 }
 

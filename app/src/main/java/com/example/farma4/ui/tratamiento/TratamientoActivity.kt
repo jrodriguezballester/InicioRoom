@@ -14,7 +14,7 @@ import com.example.farma4.MyApp
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityTratamientoBinding
-import java.util.*
+import kotlin.collections.ArrayList
 
 
 class TratamientoActivity : AppCompatActivity() {
@@ -22,7 +22,6 @@ class TratamientoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTratamientoBinding
     private lateinit var ttoViewModel: TratamientoViewModel
 
-    // private lateinit var adapter: MedicinaViewAdapter
     private lateinit var adapterDesayuno: TratamientoViewAdapter
     private lateinit var adapterComida: TratamientoViewAdapter
     private lateinit var adapterCena: TratamientoViewAdapter
@@ -55,7 +54,6 @@ class TratamientoActivity : AppCompatActivity() {
         initCenaRecyclerView()
         initResoponRecyclerView()
 
-        //   initRecyclerView()
     }
 
     private fun initDesayunoRecyclerView() {
@@ -141,81 +139,78 @@ class TratamientoActivity : AppCompatActivity() {
 
     private fun listItemClicked(medicina: Medicina) {
         Log.i("MyTAG", "pulsado listItemClicked")
-        Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
-        //     tratamientoViewModel.clickMedicina()
-
-        withMultiChoiceList2(medicina, this)
+        //   Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
+        mostrarAlertConDosis(medicina, this)
+//
     }
 
-    fun withMultiChoiceList2(medicina: Medicina, context: Context) {
-        var cero: String = "0"
-        var ceroChar = cero[0]
-        var indice = 0
-        var items = arrayOf("Desayuno", "Comida", "Cena", "Resopon")
-
-        for (num in medicina.dosis) {
-            indice += 1
-            if (num == ceroChar) {
-                when (indice) {
-                    1 -> items[indice - 1] = "-"
-                    2 -> items[indice - 1] = "-"
-                    3 -> items[indice - 1] = "-"
-                    4 -> items[indice - 1] = "-"
+    private fun mostrarAlertConDosis(medicina: Medicina, context: Context) {
+        // setup the alert builder
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Recuerda esta en:")
+        val items: Array<String> = calculaArrayDosis(medicina)
+        builder.setItems(items) { dialog, which ->
+            when (which) {
+                0, 1, 2, 3 -> {
+                    Log.i("Inventario", "pulsado OK -${which}--------")
+                    ttoViewModel.deletedMedicina.add(medicina)
+                    eliminarItems()
+                }
+                else -> {
+                    Log.i("Inventario", "pulsado OK -${which}--------")
+                    ttoViewModel.deletedMedicina.add(medicina)
+                    eliminarItems()
                 }
             }
         }
+        // create and show the alert dialog
+        builder.create().show()
 
+    }
 
-        val selectedList = java.util.ArrayList<Int>()
-        val builder = AlertDialog.Builder(context)
-
-        builder.setTitle("This is list choice dialog box")
-        builder.setMultiChoiceItems(items, null)
-        { dialog, which, isChecked ->
-            if (isChecked) {
-                selectedList.add(which)
-            } else if (selectedList.contains(which)) {
-                selectedList.remove(Integer.valueOf(which))
+    private fun calculaArrayDosis(medicina: Medicina): Array<String> {
+        val cero: String = "0"
+        val ceroChar = cero[0]
+        var indice = 0
+        val items = arrayOf("Desayuno", "Comida", "Cena", "Resopon")
+        val arrayDosis: ArrayList<String> = ArrayList<String>()
+        for (num in medicina.dosis) {
+            if (num != ceroChar) {
+                when (indice) {
+                    0 -> arrayDosis.add(items[indice])
+                    1 -> arrayDosis.add(items[indice])
+                    2 -> arrayDosis.add(items[indice])
+                    3 -> arrayDosis.add(items[indice])
+                    else -> arrayDosis.add("--")
+                }
             }
+            indice += 1
+            Log.i("calculaArrayDosis", "${arrayDosis.toString()}-------")
         }
+        val array = arrayDosis.toTypedArray()
+        return array
+    }
 
-        builder.setPositiveButton("DONE") { dialogInterface, i ->
-            Log.i("Inventario", "pulsado OK -${selectedList}--------")
-
-            ttoViewModel.deletedMedicina.add(medicina)
-
-            val selectedStrings = java.util.ArrayList<String>()
-
-            for (j in selectedList.indices) {
-                selectedStrings.add(items[selectedList[j]])
-            }
-            Log.i("Inventario", "pulsado OK -${selectedStrings}--------")
-
-            Toast.makeText(
-                context,
-                "Items selected are: " + Arrays.toString(selectedStrings.toTypedArray()),
-                Toast.LENGTH_LONG
-            ).show()
-            eliminarItems()
+    fun eliminarItems() {
+        for (medicina in ttoViewModel.deletedMedicina) {
+            if (medicina in ttoViewModel.desayunoList) ttoViewModel.desayunoList.remove(medicina)
+            if (medicina in ttoViewModel.comidaList) ttoViewModel.comidaList.remove(medicina)
+            if (medicina in ttoViewModel.cenaList) ttoViewModel.cenaList.remove(medicina)
+            if (medicina in ttoViewModel.resoponList) ttoViewModel.resoponList.remove(medicina)
         }
-        builder.show()
+        adapterDesayuno.setList(ttoViewModel.desayunoList)
+        adapterComida.setList(ttoViewModel.comidaList)
+        adapterCena.setList(ttoViewModel.cenaList)
+        adapterResopon.setList(ttoViewModel.resoponList)
+
+        adapterDesayuno.notifyDataSetChanged()
+        adapterComida.notifyDataSetChanged()
+        adapterCena.notifyDataSetChanged()
+        adapterResopon.notifyDataSetChanged()
+
     }
 
-
-    private fun initRecyclerView() {
-        binding.desayunoRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        adapterDesayuno =
-            TratamientoViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
-        binding.desayunoRecyclerView.adapter = adapterDesayuno
-        //    displayMedicinasList()
-    }
-
-    private fun displayMedicinasList() {
-        ttoViewModel.getSavedMedicinas().observe(this, Observer {
-            adapterDesayuno.setList(it)
-            adapterDesayuno.notifyDataSetChanged()
-        })
-    }
+}
 //
 //    private fun calcularDestinoListas(dosis: String, medicina: Medicina) {
 //        Log.i("MyTAG", "${medicina.name}, dosis ${dosis}::")
@@ -247,22 +242,3 @@ class TratamientoActivity : AppCompatActivity() {
 //    }
 
 
-    fun eliminarItems() {
-        for (medicina in ttoViewModel.deletedMedicina) {
-            if (medicina in ttoViewModel.desayunoList) ttoViewModel.desayunoList.remove(medicina)
-            if (medicina in ttoViewModel.comidaList) ttoViewModel.comidaList.remove(medicina)
-            if (medicina in ttoViewModel.cenaList) ttoViewModel.cenaList.remove(medicina)
-            if (medicina in ttoViewModel.resoponList) ttoViewModel.resoponList.remove(medicina)
-        }
-        adapterDesayuno.setList(ttoViewModel.desayunoList)
-        adapterComida.setList(ttoViewModel.comidaList)
-        adapterCena.setList(ttoViewModel.cenaList)
-        adapterResopon.setList(ttoViewModel.resoponList)
-
-        adapterDesayuno.notifyDataSetChanged()
-        adapterComida.notifyDataSetChanged()
-        adapterCena.notifyDataSetChanged()
-        adapterResopon.notifyDataSetChanged()
-
-    }
-}

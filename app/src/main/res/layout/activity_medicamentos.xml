@@ -6,6 +6,7 @@
     tools:context=".ui.medicamentos.MedicamentosActivity">
 
     <data>
+
         <variable
             name="myViewModel"
             type="com.example.farma4.ui.medicamentos.MedicamentosViewModel" />
@@ -23,114 +24,186 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/name_text"
+            <com.google.android.material.textfield.TextInputLayout
+               android:layout_marginVertical="@dimen/marginVertical"
+                android:id="@+id/text_input_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:ems="10"
-                android:hint="Medicina name"
-                android:inputType="textPersonName"
-                android:text="@={myViewModel.inputName}"
-                android:textStyle="bold" />
+                android:hint="nombre medicamento">
 
-            <EditText
-                android:id="@+id/principio_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:ems="10"
-                android:hint="Principio activo"
-                android:inputType="textPersonName"
-                android:text="@={myViewModel.inputPrincipio}"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/unidadesCaja_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:ems="10"
-                    android:hint="unidades por caja"
-                    android:inputType="number"
-                    android:text="@={myViewModel.inputUnidadesCaja}"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/dosis_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:hint="dosis"
-                    android:inputType="textPersonName"
-                    android:text="@={myViewModel.inputDosis}"
-                    android:textStyle="bold" />
-
-    </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/fec_ini_tto_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
-                android:ems="10"
-                android:hint="fec_ini_tto_text"
-                android:inputType="date"
-                android:text="@={myViewModel.inputFecIniTtoString}"
-                android:textStyle="bold" />
-            <EditText
-                android:id="@+id/fec_fin_tto_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginBottom="5dp"
-                android:ems="10"
-                android:hint="fec_fin_tto_text"
-                android:inputType="date"
-                android:text="@={myViewModel.inputFecFinTtoString}"
-                android:textStyle="bold" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/stock_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:hint="stock"
-                    android:inputType="number"
-                    android:text="@={myViewModel.inputStock}"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/fechaStock_text"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:hint="FechaStock"
-                    android:inputType="number"
-                    android:text="@={myViewModel.inputFechaStock}"
+                    android:inputType="textPersonName"
+                    android:text="@={myViewModel.inputName}"
                     android:textStyle="bold" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_principio"
+                android:layout_marginVertical="@dimen/marginVertical"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Principio activo">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/principio_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="@={myViewModel.inputPrincipio}"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_marginVertical="@dimen/marginVertical"
+
+                android:weightSum="100"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_unidadesCaja"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="unidades por caja">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/unidadesCaja_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="@={myViewModel.inputUnidadesCaja}"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_dosis"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="dosis">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dosis_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="@={myViewModel.inputDosis}"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginVertical="@dimen/marginVertical"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_fec_ini_tto"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fec_ini_tto">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fec_ini_tto_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="date"
+                    android:text="@={myViewModel.inputFecIniTtoString}"
+                    android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_fec_fin_tto"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fec_fin_tto">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fec_fin_tto_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:text="@={myViewModel.inputFecFinTtoString}"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </LinearLayout>
+
             <LinearLayout
+                android:layout_marginVertical="@dimen/marginVertical"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_stock"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="stock">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/stock_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:text="@={myViewModel.inputStock}"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_fechaStock"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="0dp"
+                    android:layout_weight="45"
+                    android:layout_height="wrap_content"
+                    android:hint="fecha Stock">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fechaStock_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:text="@={myViewModel.inputFechaStock}"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginVertical="@dimen/marginVertical"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -140,11 +213,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:onClick="@{()->myViewModel.deleteButton()}"
                     android:text="eliminar"
-                    />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/clear_all_or_delete_button"
@@ -152,10 +224,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:onClick="@{()->myViewModel.saveButton()}"
-                    android:text="guardar"/>
+                    android:text="guardar"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>
@@ -184,7 +256,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="@string/submit"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:src="@drawable/plus" />
 
 
         </RelativeLayout>
