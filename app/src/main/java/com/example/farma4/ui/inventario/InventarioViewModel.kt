@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.farma4.Event
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaRepository
+import com.example.farma4.tests.Utilidades.Companion.calcularStock
 import kotlinx.coroutines.launch
 import java.util.Date
 
@@ -20,17 +21,17 @@ class InventarioViewModel(private val repository: MedicinaRepository) : ViewMode
     }
 
     fun addCajas(numCajas: Int, medicina: Medicina) {
-        // numero de comprimidos
-        val numComprimidosASumar = medicina.unidadesCaja * numCajas
         //todo calcular el stock y actualizar la fecha
-        val hoy:Date=Date()
-
         Log.i(
             "MyTAG",
             "Antes update ${medicina.name},${medicina.principio},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},${medicina.fechaStock},"
         )
-        medicina.stock += numComprimidosASumar
-       // medicina.fechaStock=hoy
+        val numComprimidosASumar = medicina.unidadesCaja * numCajas
+        val stockActual= calcularStock(medicina)
+
+        medicina.stock = stockActual+numComprimidosASumar
+        medicina.fechaStock=Date()
+
         updateMedicina(medicina)
     }
 

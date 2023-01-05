@@ -38,8 +38,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
 
     private fun initRecyclerView() {
         binding.inventarioRecyclerView.layoutManager = LinearLayoutManager(this)
-        adapter =
-            InventarioViewAdapter(this, { selectedItem: Medicina -> listItemClicked(selectedItem) })
+        adapter = InventarioViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.inventarioRecyclerView.adapter = adapter
         displayMedicinasList()
     }
@@ -53,7 +52,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     private fun displayMedicinasList() {
         inventarioViewModel.getSavedMedicinas().observe(this) {
 
-            var mylist=   it.sortedBy { it.name}
+            val mylist = it.sortedBy { it.name }
             adapter.setList(mylist)
 
             adapter.notifyDataSetChanged()
@@ -67,6 +66,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
 
     override fun onDialogPositiveClick(dialog: DialogFragment, numCajas: Int, medicina: Medicina) {
         Log.i("Inventario", "pulsado OK ${medicina.name}:${numCajas}")
+
         inventarioViewModel.addCajas(numCajas, medicina)
     }
 

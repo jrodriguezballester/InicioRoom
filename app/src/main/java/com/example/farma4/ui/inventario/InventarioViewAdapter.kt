@@ -56,10 +56,10 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
         val consumoDiario = calcularConsumoDiario(medicina.dosis)
         val consumoSemanal: Double = (consumoDiario * 7)
         val actualStock = calcularStock(medicina, consumoDiario)
+
         val numSemanas: Double = actualStock / consumoSemanal
         val fechaFinal: String = calcularDiasFinStock(consumoDiario, actualStock)
-
-        val cardColor: Int = calcularColor(context,consumoDiario,actualStock,medicina)
+        val cardColor: Int = calcularColor(context, consumoDiario, actualStock, medicina)
 
         binding.apply {
             cardView.setCardBackgroundColor(cardColor)

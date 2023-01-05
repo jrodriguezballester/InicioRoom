@@ -57,6 +57,7 @@ class Utilidades {
             return numComprimidosDiarios
         }
 
+
         fun calcularStock(medicina: Medicina, consumoDiario: Double): Int {
             val dias: Int = calculoPeriodoStock(medicina.fechaStock)
             val stock: Int = medicina.stock - (dias * consumoDiario).toInt()
@@ -67,13 +68,25 @@ class Utilidades {
             return stock
         }
 
+      fun calcularStock(medicina: Medicina): Int {
+          val dias: Int = calculoPeriodoStock(medicina.fechaStock)
+          val consumoDiario=calcularConsumoDiario(medicina.dosis)
+          val stock: Int = medicina.stock - (dias * consumoDiario).toInt()
+          Log.i(
+              "MyTAG",
+              "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock ${stock}"
+          )
+          return stock
+
+
+      }
+
         fun calculoPeriodoStock(fechaStock: Date): Int {
             val fechaFinal = Date()
             val dias = ((fechaFinal.time - fechaStock.time) / 86400000).toInt()
             Log.i("MyTAG", "Hay $dias dias de diferencia")
             return dias
         }
-
         fun calcularColorTto(context: Context, dias: Long): Int {
             val colorDeFondo: Int
             colorDeFondo = when (dias) {
