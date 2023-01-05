@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -84,6 +86,33 @@ class Utilidades {
 
             return colorDeFondo
         }
+        fun roundOffOneDecimal(number: Double): String {
+            val df = DecimalFormat("#.#")
+            df.roundingMode = RoundingMode.CEILING
+            return df.format(number)
+        }
+        fun roundOffZeroDecimal(number: Double): String {
+            val df = DecimalFormat("#")
+            df.roundingMode = RoundingMode.CEILING
+            return df.format(number)
+        }
+        fun roundOffZeroDecimalDown(number: Double): String {
+            val df = DecimalFormat("#")
+            df.roundingMode = RoundingMode.DOWN
+            return df.format(number)
+        }
+
+         fun calcularDiasFinStock(consumoDiario: Double, nuevoStock: Int): String {
+            val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
+            val today = Date()
+            val calendar: Calendar = Calendar.getInstance()
+            calendar.time = today
+            calendar.add(Calendar.DATE, numDias)
+            val fechaFinal =dateToString(calendar.time)
+            return fechaFinal
+        }
+
+
 
     }
 
