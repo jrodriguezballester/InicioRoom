@@ -13,4 +13,6 @@
     <string name="submit">add</string>
     <string name="fec_ini_tto">fecha inicio tratamiento</string>
     <string name="fec_fin_tto">fecha fin tratamiento</string>
+    <string name="fin_dias_tto">Fin dias Tto</string>
+    <string name="fecha">Fecha</string>
 </resources>

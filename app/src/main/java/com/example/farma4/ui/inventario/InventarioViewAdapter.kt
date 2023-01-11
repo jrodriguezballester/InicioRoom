@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
+import com.example.farma4.database.model.MapperImpl
+import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemInventarioBinding
 import com.example.farma4.tests.Utilidades.Companion.calcularColor
@@ -22,11 +24,17 @@ import java.util.*
 class InventarioViewAdapter(
     private val clickListener: (Medicina) -> Unit
 ) : RecyclerView.Adapter<InventarioViewHolder>() {
-    private val medicinasList = ArrayList<Medicina>()
+    private var medicinasList = ArrayList<Medicina>()
 
     fun setList(medicinaList: List<Medicina>) {
         medicinasList.clear()
         medicinasList.addAll(medicinaList)
+    }
+    fun setList2(mylistOrd: List<MedTope>) {
+        medicinasList.clear()
+        medicinasList= mylistOrd.map {MapperImpl.MedTopeTOMed(it)  } as ArrayList<Medicina>
+//        medicinasList.map {  }
+//        medicinasList.addAll(medicinaList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InventarioViewHolder {
@@ -42,6 +50,7 @@ class InventarioViewAdapter(
     }
 
     override fun getItemCount(): Int = medicinasList.size
+
 
 
 }

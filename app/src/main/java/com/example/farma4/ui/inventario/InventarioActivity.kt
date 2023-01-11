@@ -10,8 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.farma4.MyApp
 import com.example.farma4.R
+import com.example.farma4.database.model.MapperImpl
+import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityInventarioBinding
+import com.example.farma4.tests.Utilidades
 
 class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.InventarioDialogListener {
     private lateinit var binding: ActivityInventarioBinding
@@ -40,7 +43,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
         binding.inventarioRecyclerView.layoutManager = LinearLayoutManager(this)
         adapter = InventarioViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.inventarioRecyclerView.adapter = adapter
-        displayMedicinasList()
+        displayMedicinasList2()
     }
 
     private fun listItemClicked(medicina: Medicina) {
@@ -51,13 +54,32 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
 
     private fun displayMedicinasList() {
         inventarioViewModel.getSavedMedicinas().observe(this) {
-
             val mylist = it.sortedBy { it.name }
             adapter.setList(mylist)
-
             adapter.notifyDataSetChanged()
         }
     }
+
+    private fun displayMedicinasList2() {
+        val myList=mutableListOf<MedTope>()
+        inventarioViewModel.getSavedMedicinas().observe(this) {
+
+            for (medicina in it) {
+                val consumoDiario = Utilidades.calcularConsumoDiario(medicina.dosis)
+                val consumoSemanal: Double = (consumoDiario * 7)
+                val actualStock = Utilidades.calcularStock(medicina, consumoDiario)
+                val numSemanas: Double = actualStock / consumoSemanal
+                val fechaFinal: String = Utilidades.calcularDiasFinStock(consumoDiario, actualStock)
+                val medTope = MapperImpl.MedTOMedTope(medicina, numSemanas, fechaFinal)
+                myList.add(medTope)
+            }
+
+            val mylistOrd = myList.sortedBy { it.numSemanas}
+            adapter.setList2(mylistOrd)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
 
     fun showdialog(medicina: Medicina) {
         val newFragment = InventarioDialogFragment(medicina)
@@ -66,7 +88,6 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
 
     override fun onDialogPositiveClick(dialog: DialogFragment, numCajas: Int, medicina: Medicina) {
         Log.i("Inventario", "pulsado OK ${medicina.name}:${numCajas}")
-
         inventarioViewModel.addCajas(numCajas, medicina)
     }
 
