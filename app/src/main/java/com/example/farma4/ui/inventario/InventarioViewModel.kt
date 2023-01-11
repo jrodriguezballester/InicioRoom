@@ -21,7 +21,6 @@ class InventarioViewModel(private val repository: MedicinaRepository) : ViewMode
     }
 
     fun addCajas(numCajas: Int, medicina: Medicina) {
-        //todo calcular el stock y actualizar la fecha
         Log.i(
             "MyTAG",
             "Antes update ${medicina.name},${medicina.principio},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},${medicina.fechaStock},"
@@ -36,10 +35,6 @@ class InventarioViewModel(private val repository: MedicinaRepository) : ViewMode
     }
 
     private fun updateMedicina(medicina: Medicina) {
-        Log.i(
-            "MyTAG",
-            "update ${medicina.name},${medicina.principio},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},${medicina.fechaStock},"
-        )
         viewModelScope.launch {
             val rows = repository.update(medicina)
             if (rows > 0) {

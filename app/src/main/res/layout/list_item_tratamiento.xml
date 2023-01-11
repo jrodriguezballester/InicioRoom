@@ -19,6 +19,12 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp">
 
+                <ImageView
+                    android:id="@+id/imagePreparado"
+                    android:layout_width="67dp"
+                    android:layout_height="72dp"
+                    app:srcCompat="@drawable/plus" />
+
                 <LinearLayout
                     android:id="@+id/list_item_layout"
                     android:layout_width="match_parent"

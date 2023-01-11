@@ -11,7 +11,7 @@ class InicialViewModel() : ViewModel() {
     var buttonToActivity1 = "Medicamentos"
     var buttonToActivity2 = "Tratamiento"
     var buttonToActivity3 = "Inventario"
-    var buttonToActivity4 = "Añadir Stock"
+    var buttonToActivity4 = "Control Recetas"
 
 
     init {
@@ -45,7 +45,7 @@ class InicialViewModel() : ViewModel() {
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
     fun iniciarBD(context:Context) {
-        val medicinaDAO = MedicinaDatabase.getInstance(context)!!.medicinaDAO
+        val medicinaDAO = MedicinaDatabase.getInstance(context).medicinaDAO
         Log.i("MenuActivity", "valor::${medicinaDAO}")
 
     }

@@ -7,15 +7,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.farma4.MyApp
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityTratamientoBinding
-import kotlin.collections.ArrayList
-
 
 class TratamientoActivity : AppCompatActivity() {
 
@@ -26,6 +23,7 @@ class TratamientoActivity : AppCompatActivity() {
     private lateinit var adapterComida: TratamientoViewAdapter
     private lateinit var adapterCena: TratamientoViewAdapter
     private lateinit var adapterResopon: TratamientoViewAdapter
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +52,14 @@ class TratamientoActivity : AppCompatActivity() {
         initCenaRecyclerView()
         initResoponRecyclerView()
 
+
+
     }
 
     private fun initDesayunoRecyclerView() {
         binding.desayunoRecyclerView.layoutManager = GridLayoutManager(this, 2)
         adapterDesayuno =
-            TratamientoViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
+            TratamientoViewAdapter(::listItemClicked)
         binding.desayunoRecyclerView.adapter = adapterDesayuno
         desayunoMedicinasList()
     }
@@ -89,77 +89,76 @@ class TratamientoActivity : AppCompatActivity() {
     }
 
     private fun desayunoMedicinasList() {
-        val cero: String = "0"
-        var ceroChar = cero[0]
-        ttoViewModel.getSavedMedicinas().observe(this, Observer {
+        val cero= "0"
+        val ceroChar = cero[0]
+        ttoViewModel.getSavedMedicinas().observe(this) {
             for (medicina in it)
                 if (medicina.dosis[0] != ceroChar) ttoViewModel.desayunoList.add(medicina)
             Log.i("MyTAG", "desayunoMedicinasList ${ttoViewModel.desayunoList}")
-            adapterDesayuno.setList(ttoViewModel.desayunoList)
+            adapterDesayuno.setList(ttoViewModel.desayunoList, ttoViewModel.deletedMedicina)
             adapterDesayuno.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun comidaMedicinaList() {
-        val cero: String = "0"
-        var ceroChar = cero[0]
-        ttoViewModel.getSavedMedicinas().observe(this, Observer {
+        val cero = "0"
+        val ceroChar = cero[0]
+        ttoViewModel.getSavedMedicinas().observe(this) {
             for (medicina in it) {
                 if (medicina.dosis[1] != ceroChar) ttoViewModel.comidaList.add(medicina)
             }
             Log.i("MyTAG", "comidaMedicinasList ${ttoViewModel.comidaList}")
-            adapterComida.setList(ttoViewModel.comidaList)
+            adapterComida.setList(ttoViewModel.comidaList, ttoViewModel.deletedMedicina)
             adapterComida.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun cenaMedicinasList() {
-        val cero: String = "0"
-        var ceroChar = cero[0]
-        ttoViewModel.getSavedMedicinas().observe(this, Observer {
+        val cero = "0"
+        val ceroChar = cero[0]
+        ttoViewModel.getSavedMedicinas().observe(this) {
             for (medicina in it)
                 if (medicina.dosis[2] != ceroChar) ttoViewModel.cenaList.add(medicina)
             Log.i("MyTAG", "desayunoMedicinasList ${ttoViewModel.cenaList}")
-            adapterCena.setList(ttoViewModel.cenaList)
+            adapterCena.setList(ttoViewModel.cenaList, ttoViewModel.deletedMedicina)
             adapterCena.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun resoponMedicinasList() {
-        val cero: String = "0"
-        var ceroChar = cero[0]
-        ttoViewModel.getSavedMedicinas().observe(this, Observer {
+        val cero = "0"
+        val ceroChar = cero[0]
+        ttoViewModel.getSavedMedicinas().observe(this) {
             for (medicina in it)
                 if (medicina.dosis[3] != ceroChar) ttoViewModel.resoponList.add(medicina)
             Log.i("MyTAG", "desayunoMedicinasList ${ttoViewModel.resoponList}")
-            adapterResopon.setList(ttoViewModel.resoponList)
+            adapterResopon.setList(ttoViewModel.resoponList, ttoViewModel.deletedMedicina)
             adapterResopon.notifyDataSetChanged()
-        })
+        }
     }
 
     private fun listItemClicked(medicina: Medicina) {
         Log.i("MyTAG", "pulsado listItemClicked")
-        //   Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
         mostrarAlertConDosis(medicina, this)
-//
     }
+
 
     private fun mostrarAlertConDosis(medicina: Medicina, context: Context) {
         // setup the alert builder
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Recuerda esta en:")
+        builder.setTitle("Recuerda ${medicina.name } esta en:")
         val items: Array<String> = calculaArrayDosis(medicina)
         builder.setItems(items) { dialog, which ->
             when (which) {
                 0, 1, 2, 3 -> {
                     Log.i("Inventario", "pulsado OK -${which}--------")
                     ttoViewModel.deletedMedicina.add(medicina)
-                    eliminarItems()
+                    marcarItems()
                 }
                 else -> {
                     Log.i("Inventario", "pulsado OK -${which}--------")
                     ttoViewModel.deletedMedicina.add(medicina)
-                    eliminarItems()
+               //     eliminarItems()
                 }
             }
         }
@@ -169,7 +168,7 @@ class TratamientoActivity : AppCompatActivity() {
     }
 
     private fun calculaArrayDosis(medicina: Medicina): Array<String> {
-        val cero: String = "0"
+        val cero = "0"
         val ceroChar = cero[0]
         var indice = 0
         val items = arrayOf("Desayuno", "Comida", "Cena", "Resopon")
@@ -191,17 +190,11 @@ class TratamientoActivity : AppCompatActivity() {
         return array
     }
 
-    fun eliminarItems() {
-        for (medicina in ttoViewModel.deletedMedicina) {
-            if (medicina in ttoViewModel.desayunoList) ttoViewModel.desayunoList.remove(medicina)
-            if (medicina in ttoViewModel.comidaList) ttoViewModel.comidaList.remove(medicina)
-            if (medicina in ttoViewModel.cenaList) ttoViewModel.cenaList.remove(medicina)
-            if (medicina in ttoViewModel.resoponList) ttoViewModel.resoponList.remove(medicina)
-        }
-        adapterDesayuno.setList(ttoViewModel.desayunoList)
-        adapterComida.setList(ttoViewModel.comidaList)
-        adapterCena.setList(ttoViewModel.cenaList)
-        adapterResopon.setList(ttoViewModel.resoponList)
+    fun marcarItems() {
+        adapterDesayuno.setList(ttoViewModel.desayunoList,ttoViewModel.deletedMedicina)
+        adapterComida.setList(ttoViewModel.comidaList, ttoViewModel.deletedMedicina)
+        adapterCena.setList(ttoViewModel.cenaList, ttoViewModel.deletedMedicina)
+        adapterResopon.setList(ttoViewModel.resoponList, ttoViewModel.deletedMedicina)
 
         adapterDesayuno.notifyDataSetChanged()
         adapterComida.notifyDataSetChanged()
@@ -209,36 +202,6 @@ class TratamientoActivity : AppCompatActivity() {
         adapterResopon.notifyDataSetChanged()
 
     }
-
 }
-//
-//    private fun calcularDestinoListas(dosis: String, medicina: Medicina) {
-//        Log.i("MyTAG", "${medicina.name}, dosis ${dosis}::")
-//        var indice = 0
-//        var cero: String = "0"
-//        var ceroChar = cero[0]
-//        ttoViewModel.desayunoList.clear()
-//        ttoViewModel.comidaList.clear()
-//        ttoViewModel.cenaList.clear()
-//        ttoViewModel.resoponList.clear()
-//        for (num in dosis) {
-//            indice += 1
-//            if (num != ceroChar) {
-//                when (indice) {
-//                    1 -> ttoViewModel.desayunoList.add(medicina)
-//                    2 -> ttoViewModel.comidaList.add(medicina)
-//                    3 -> ttoViewModel.cenaList.add(medicina)
-//                    4 -> ttoViewModel.resoponList.add(medicina)
-//
-//                }
-//            }
-//        }
-//
-//        Log.i("MyTAG ", "desayuno  ${ttoViewModel.desayunoList}::")
-//        Log.i("MyTAG ", "comida  ${ttoViewModel.comidaList}::")
-//        Log.i("MyTAG ", "cena  ${ttoViewModel.cenaList}::")
-//        Log.i("MyTAG ", "resopon  ${ttoViewModel.resoponList}::")
-//
-//    }
 
 
