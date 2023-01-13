@@ -14,7 +14,7 @@ import com.example.farma4.database.model.MapperImpl
 import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityInventarioBinding
-import com.example.farma4.tests.Utilidades
+import com.example.farma4.Utilities.Utilidades
 
 class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.InventarioDialogListener {
     private lateinit var binding: ActivityInventarioBinding

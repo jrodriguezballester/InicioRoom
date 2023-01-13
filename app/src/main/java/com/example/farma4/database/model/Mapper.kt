@@ -1,6 +1,6 @@
 package com.example.farma4.database.model
 
-import com.example.farma4.tests.Utilidades
+import com.example.farma4.Utilities.Utilidades
 
 interface Mapper {
 

@@ -1,4 +1,4 @@
-package com.example.farma4.ui
+package com.example.farma4.ui.inicial
 
 import android.app.Activity
 import android.content.Context

@@ -1,10 +1,9 @@
-package com.example.farma4.tests
+package com.example.farma4.Utilities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.room.Room
-import com.example.farma4.MedicinaViewModelFactory
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaDAO
 import com.example.farma4.database.MedicinaDatabase
@@ -34,7 +33,7 @@ class TestActivity : AppCompatActivity() {
         medicinaDAO = db.medicinaDAO
         medicinaRepo = MedicinaRepository(medicinaDAO)
         val medicinaRepository = MedicinaRepository(medicinaDAO)
-        val factory = MedicinaViewModelFactory(medicinaRepository)
+       // val factory = MedicinaViewModelFactory(medicinaRepository)
 
         testDB()
 

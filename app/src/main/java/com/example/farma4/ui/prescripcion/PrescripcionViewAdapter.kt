@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ItemPrescripcionBinding
-import com.example.farma4.tests.Utilidades
+import com.example.farma4.Utilities.Utilidades
 import java.util.*
 
 class PrescripcionViewAdapter : RecyclerView.Adapter<PrescripcionViewHolder>() {

@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.InicialActivity">
+    tools:context=".ui.inicial.InicialActivity">
 
     <data>
 
         <variable
             name="myViewModel"
-            type="com.example.farma4.ui.InicialViewModel" />
+            type="com.example.farma4.ui.inicial.InicialViewModel" />
     </data>
 
     <LinearLayout

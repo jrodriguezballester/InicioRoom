@@ -1,4 +1,4 @@
-package com.example.farma4.ui
+package com.example.farma4.ui.inicial
 
 import android.content.Context
 import android.util.Log
@@ -11,13 +11,14 @@ class InicialViewModel() : ViewModel() {
     var buttonToActivity1 = "Medicamentos"
     var buttonToActivity2 = "Tratamiento"
     var buttonToActivity3 = "Inventario"
-    var buttonToActivity4 = "Control Recetas"
+    var buttonToActivity4 = "Caducidad Recetas"
 
 
     init {
         Log.i("InicialActivity", "viewmodel")
         cambioActivity.value = 0
         Log.i("InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
+
     }
 
     fun toAddMedicina() {

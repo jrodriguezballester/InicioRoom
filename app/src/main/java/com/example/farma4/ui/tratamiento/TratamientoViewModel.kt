@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.farma4.Event
+import com.example.farma4.Utilities.Event
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.database.model.Medicina
 

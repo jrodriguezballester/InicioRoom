@@ -2,12 +2,12 @@ package com.example.farma4.ui.medicamentos
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.farma4.Event
+import com.example.farma4.Utilities.Event
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.database.model.MapperImpl
 import com.example.farma4.database.model.MedForm
 import com.example.farma4.database.model.Medicina
-import com.example.farma4.tests.Utilidades
+import com.example.farma4.Utilities.Utilidades
 import kotlinx.coroutines.launch
 import java.util.*
 

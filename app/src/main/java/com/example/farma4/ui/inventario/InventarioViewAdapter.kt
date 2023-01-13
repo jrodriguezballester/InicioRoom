@@ -13,12 +13,12 @@ import com.example.farma4.database.model.MapperImpl
 import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ListItemInventarioBinding
-import com.example.farma4.tests.Utilidades.Companion.calcularColor
-import com.example.farma4.tests.Utilidades.Companion.calcularConsumoDiario
-import com.example.farma4.tests.Utilidades.Companion.calcularDiasFinStock
-import com.example.farma4.tests.Utilidades.Companion.calcularStock
-import com.example.farma4.tests.Utilidades.Companion.roundOffOneDecimal
-import com.example.farma4.tests.Utilidades.Companion.roundOffZeroDecimal
+import com.example.farma4.Utilities.Utilidades.Companion.calcularColor
+import com.example.farma4.Utilities.Utilidades.Companion.calcularConsumoDiario
+import com.example.farma4.Utilities.Utilidades.Companion.calcularDiasFinStock
+import com.example.farma4.Utilities.Utilidades.Companion.calcularStock
+import com.example.farma4.Utilities.Utilidades.Companion.roundOffOneDecimal
+import com.example.farma4.Utilities.Utilidades.Companion.roundOffZeroDecimal
 import java.util.*
 
 class InventarioViewAdapter(

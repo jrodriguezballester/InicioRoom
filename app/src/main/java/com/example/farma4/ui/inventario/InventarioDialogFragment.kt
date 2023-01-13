@@ -42,10 +42,21 @@ class InventarioDialogFragment(private val medicina: Medicina) : DialogFragment(
             var numCajas = 1
             builder.setTitle(medicina.name)
             builder.setSingleChoiceItems(listItems, 0) { dialogInterface, i ->
-                Log.i("Dialog", "pulsado::${i}")
-                numCajas += i
+                when (i){
+                    0,1 ->{
+                        Log.i("Dialog", "pulsado::${i}")
+                        numCajas += i
+                    }
+                   2 ->{
+                       Log.i("Dialog", "pulsadosssss::${i}")
+                       numCajas += i
+                   }
+                }
+//                Log.i("Dialog", "pulsado::${i}")
+//                numCajas += i
             }
                 .setPositiveButton(R.string.aceptar) { dialog, id ->
+                    Log.i("Dialog", "numCajas::${numCajas}")
                    listener.onDialogPositiveClick(this,numCajas,medicina)
                 }
                 .setNegativeButton(R.string.cancel) { dialog, id ->

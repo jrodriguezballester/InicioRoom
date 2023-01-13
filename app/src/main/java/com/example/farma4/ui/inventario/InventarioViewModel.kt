@@ -2,10 +2,10 @@ package com.example.farma4.ui.inventario
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.farma4.Event
+import com.example.farma4.Utilities.Event
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.database.MedicinaRepository
-import com.example.farma4.tests.Utilidades.Companion.calcularStock
+import com.example.farma4.Utilities.Utilidades.Companion.calcularStock
 import kotlinx.coroutines.launch
 import java.util.Date
 

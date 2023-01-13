@@ -1,4 +1,4 @@
-package com.example.farma4.tests
+package com.example.farma4.Utilities
 
 import android.content.Context
 import android.util.Log

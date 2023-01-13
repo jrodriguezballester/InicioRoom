@@ -15,14 +15,12 @@ class MyApp:Application() {
    }
 
 
-
     override fun onCreate() {
         super.onCreate()
-        medicinaDAO = MedicinaDatabase.getInstance(this)!!.medicinaDAO
+        medicinaDAO = MedicinaDatabase.getInstance(this).medicinaDAO
         Log.i("MyTAG", ": medicinaDAO::${medicinaDAO}")
         medicinaRepository = MedicinaRepository(medicinaDAO!!)
-
+        }
     }
 
 
-}
