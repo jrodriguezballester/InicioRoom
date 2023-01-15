@@ -1,6 +1,5 @@
 package com.example.farma4.ui.inventario
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -8,15 +7,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.farma4.BaseActivity
 import com.example.farma4.MyApp
 import com.example.farma4.R
+import com.example.farma4.Utilities.Utilidades
 import com.example.farma4.database.model.MapperImpl
 import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityInventarioBinding
-import com.example.farma4.Utilities.Utilidades
 
-class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.InventarioDialogListener {
+class InventarioActivity :BaseActivity(), InventarioDialogFragment.InventarioDialogListener {
     private lateinit var binding: ActivityInventarioBinding
     private lateinit var adapter: InventarioViewAdapter
     private lateinit var inventarioViewModel: InventarioViewModel
@@ -24,7 +24,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventario)
-        Log.i("Inventario", "XXXXXX")
+        Log.i("MyTAG Inventario", "XXXXXX")
         val factory = InventarioViewModelFactory(MyApp.medicinaRepository!!)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_inventario)
@@ -44,10 +44,11 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
         adapter = InventarioViewAdapter { selectedItem: Medicina -> listItemClicked(selectedItem) }
         binding.inventarioRecyclerView.adapter = adapter
         displayMedicinasList2()
+
     }
 
     private fun listItemClicked(medicina: Medicina) {
-        Log.i("Inventario", "pulsado")
+        Log.i("MyTAG Inventario", "pulsado")
         Toast.makeText(this, "selected name is ${medicina.name}", Toast.LENGTH_LONG).show()
         showdialog(medicina)
     }
@@ -61,9 +62,9 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     }
 
     private fun displayMedicinasList2() {
-        val myList=mutableListOf<MedTope>()
+        val myList = mutableListOf<MedTope>()
         inventarioViewModel.getSavedMedicinas().observe(this) {
-
+            myList.clear()
             for (medicina in it) {
                 val consumoDiario = Utilidades.calcularConsumoDiario(medicina.dosis)
                 val consumoSemanal: Double = (consumoDiario * 7)
@@ -74,7 +75,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
                 myList.add(medTope)
             }
 
-            val mylistOrd = myList.sortedBy { it.numSemanas}
+            val mylistOrd = myList.sortedBy { it.numSemanas }
             adapter.setList2(mylistOrd)
             adapter.notifyDataSetChanged()
         }
@@ -87,7 +88,7 @@ class InventarioActivity : AppCompatActivity(), InventarioDialogFragment.Inventa
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment, numCajas: Int, medicina: Medicina) {
-        Log.i("Inventario", "pulsado OK ${medicina.name}:${numCajas}")
+        Log.i("MyTAG Inventario", "pulsado OK ${medicina.name}:${numCajas}")
         inventarioViewModel.addCajas(numCajas, medicina)
     }
 

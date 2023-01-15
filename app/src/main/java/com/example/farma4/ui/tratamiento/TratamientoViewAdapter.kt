@@ -31,6 +31,9 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
         this.deletedMedicina = deletedMedicina
     }
 
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TratamientoViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemTratamientoBinding =
@@ -40,7 +43,7 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TratamientoViewHolder, position: Int) {
-         holder.bind(medicinasList[position], clickListener, deletedMedicina)
+        holder.bind(medicinasList[position], clickListener, deletedMedicina)
     }
 
     override fun getItemCount(): Int = medicinasList.size
@@ -55,7 +58,7 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
     fun bind(
         medicina: Medicina, clickListener: (Medicina) -> Unit,
         deletedMedicina: ArrayList<Medicina>,
-              ) {
+    ) {
         if (isFirstItem) dimensionarItem()
         if (medicina in deletedMedicina) {
             binding.imagePreparado.visibility = View.VISIBLE
@@ -78,11 +81,9 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
         }
         binding.listItemLayout.setOnLongClickListener {
             Log.i("MyTAG", "pulsado setOnLongClickListener")
-
             true
         }
     }
-
 
 
     private fun dimensionarItem() {

@@ -191,8 +191,18 @@
                            android:layout_centerInParent="true"
                             android:layout_marginLeft="10dp"
                             android:orientation="horizontal">
+
                             <TextView
-                                android:id="@+id/consumoSemanal_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disponible:"
+                                android:textColor="@color/White"
+                                android:textSize="@dimen/segundoNivel" />
+                            <Space
+                                android:layout_width="@dimen/space"
+                                android:layout_height="10dp" />
+                            <TextView
+                                android:id="@+id/stockDisponible_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
@@ -200,15 +210,6 @@
                                 android:textColor="@color/White"
                                 android:textSize="@dimen/tercerNivel"
                                 android:textStyle="bold" />
-                            <Space
-                                android:layout_width="@dimen/space"
-                                android:layout_height="10dp" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="x Semana"
-                                android:textColor="@color/White"
-                                android:textSize="@dimen/segundoNivel" />
                         </LinearLayout>
 
                         <LinearLayout

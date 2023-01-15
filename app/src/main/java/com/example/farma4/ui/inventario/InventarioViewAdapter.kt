@@ -9,16 +9,15 @@ import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.farma4.R
-import com.example.farma4.database.model.MapperImpl
-import com.example.farma4.database.model.MedTope
-import com.example.farma4.database.model.Medicina
-import com.example.farma4.databinding.ListItemInventarioBinding
 import com.example.farma4.Utilities.Utilidades.Companion.calcularColor
 import com.example.farma4.Utilities.Utilidades.Companion.calcularConsumoDiario
 import com.example.farma4.Utilities.Utilidades.Companion.calcularDiasFinStock
 import com.example.farma4.Utilities.Utilidades.Companion.calcularStock
 import com.example.farma4.Utilities.Utilidades.Companion.roundOffOneDecimal
-import com.example.farma4.Utilities.Utilidades.Companion.roundOffZeroDecimal
+import com.example.farma4.database.model.MapperImpl
+import com.example.farma4.database.model.MedTope
+import com.example.farma4.database.model.Medicina
+import com.example.farma4.databinding.ListItemInventarioBinding
 import java.util.*
 
 class InventarioViewAdapter(
@@ -30,11 +29,10 @@ class InventarioViewAdapter(
         medicinasList.clear()
         medicinasList.addAll(medicinaList)
     }
+
     fun setList2(mylistOrd: List<MedTope>) {
         medicinasList.clear()
         medicinasList= mylistOrd.map {MapperImpl.MedTopeTOMed(it)  } as ArrayList<Medicina>
-//        medicinasList.map {  }
-//        medicinasList.addAll(medicinaList)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InventarioViewHolder {
@@ -50,9 +48,6 @@ class InventarioViewAdapter(
     }
 
     override fun getItemCount(): Int = medicinasList.size
-
-
-
 }
 
 class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: Context) :
@@ -65,7 +60,7 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
         val consumoDiario = calcularConsumoDiario(medicina.dosis)
         val consumoSemanal: Double = (consumoDiario * 7)
         val actualStock = calcularStock(medicina, consumoDiario)
-
+        val stockAfterDispensado= (actualStock - (consumoDiario * 8)).toInt().toString()
         val numSemanas: Double = actualStock / consumoSemanal
         val fechaFinal: String = calcularDiasFinStock(consumoDiario, actualStock)
         val cardColor: Int = calcularColor(context, consumoDiario, actualStock, medicina)
@@ -77,7 +72,8 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
             unidadesCajaTextView.text = medicina.unidadesCaja.toString()
             stockTextView.text = actualStock.toString()
             consumoTextView.text = roundOffOneDecimal(consumoDiario)
-            consumoSemanalTextView.text = roundOffZeroDecimal(consumoSemanal)
+            stockDisponibleTextView.text = stockAfterDispensado
+         //   consumoSemanalTextView.text = roundOffZeroDecimal(consumoSemanal)
             numSemTextView.text = roundOffOneDecimal(numSemanas)
             fechaFinalTextView.text = fechaFinal
             listItemLayout.setOnClickListener {
@@ -85,7 +81,6 @@ class InventarioViewHolder(val binding: ListItemInventarioBinding, val context: 
             }
         }
     }
-
 
 }
 

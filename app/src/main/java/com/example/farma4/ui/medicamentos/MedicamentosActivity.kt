@@ -74,7 +74,10 @@ class MedicamentosActivity : AppCompatActivity() {
 
 
     private fun displayMedicinasList() {
+        Log.i("MyTAG", "displayMedicinasList()")
         medicamentosViewModel.getSavedMedicinas().observe(this, Observer {
+            Log.i("MyTAG", "displayMedicinasList() ${it}")
+
             adapter.setList(it)
             adapter.notifyDataSetChanged()
         })

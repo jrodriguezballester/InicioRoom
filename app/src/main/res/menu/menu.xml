@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/itemTto"
+        android:title="Tratamiento"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/itemMedicinas"
+        android:title="Medicinas"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemRecetas"
+        android:title="Caducidad Recetas"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/itemInventario"
+        android:title="Inventario"
+        app:showAsAction="ifRoom"/>
+
+
+</menu>

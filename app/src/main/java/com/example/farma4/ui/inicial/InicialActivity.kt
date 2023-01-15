@@ -32,18 +32,17 @@ class InicialActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
      //   inicialViewModel.iniciarBD(this)
         Log.i("MyTAG", "InicialActivity valor::${inicialViewModel.cambioActivity.value.toString()}")
-
         inicialViewModel.cambioActivity.observe(this) {
             Log.i("MyTAG", "valor: ${it}")
             when (it) {
                 // medicamentos
                 1 -> startActivity<MedicamentosActivity>()
                 // Tratamiento
-                2 -> startActivity<TratamientoActivity>()
+                4 -> startActivity<TratamientoActivity>()
                 // Inventario
                 3 -> startActivity<InventarioActivity>()
                 // Inventario
-                4 -> startActivity<PrescripcionActivity>()
+                2 -> startActivity<PrescripcionActivity>()
             }
         }
     }
