@@ -1,8 +1,12 @@
 package com.example.farma4.ui.inventario
 
+import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,11 +20,11 @@ import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityInventarioBinding
 
-class InventarioActivity :BaseActivity(), InventarioDialogFragment.InventarioDialogListener {
+class InventarioActivity : BaseActivity(), InventarioDialogFragment.InventarioDialogListener {
     private lateinit var binding: ActivityInventarioBinding
     private lateinit var adapter: InventarioViewAdapter
     private lateinit var inventarioViewModel: InventarioViewModel
-
+    private lateinit var subList: List<MedTope>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inventario)
@@ -74,8 +78,9 @@ class InventarioActivity :BaseActivity(), InventarioDialogFragment.InventarioDia
                 val medTope = MapperImpl.MedTOMedTope(medicina, numSemanas, fechaFinal)
                 myList.add(medTope)
             }
+            val mylistOrd: List<MedTope> = myList.sortedBy { it.numSemanas }
+            subList = mylistOrd.filter { it.numSemanas <= 4 }
 
-            val mylistOrd = myList.sortedBy { it.numSemanas }
             adapter.setList2(mylistOrd)
             adapter.notifyDataSetChanged()
         }
@@ -83,7 +88,7 @@ class InventarioActivity :BaseActivity(), InventarioDialogFragment.InventarioDia
 
 
     fun showdialog(medicina: Medicina) {
-        val newFragment = InventarioDialogFragment(medicina)
+        val newFragment = InventarioDialogFragment(medicina, subList)
         newFragment.show(supportFragmentManager, "game")
     }
 
@@ -92,4 +97,26 @@ class InventarioActivity :BaseActivity(), InventarioDialogFragment.InventarioDia
         inventarioViewModel.addCajas(numCajas, medicina)
     }
 
+    override fun mandarMensaje(dialog: Dialog?) {
+
+        Log.i("MyTAG __Inventario", "captura")
+
+        val listaAComprar = subList.map { it.medicina.name }
+        Log.i("MyTAG __Inventario", "message::$listaAComprar")
+
+        val phoneNumber = "+34605011868" // Número de teléfono del destinatario
+
+        val urgentes = subList.filter { it.numSemanas <= 2 }.map { it.medicina.name }
+        val resto = subList.filter { it.numSemanas > 2 }.map { it.medicina.name }
+
+        val message = "Falta Comprar Urgente:\n $urgentes \n y si salen:\n $resto"
+
+        val intent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://api.whatsapp.com/send?phone=$phoneNumber&text=$message")
+        )
+        startActivity(intent)
+        Log.i("MyTAG __Inventario", "lanzar wasap")
+
+    }
 }

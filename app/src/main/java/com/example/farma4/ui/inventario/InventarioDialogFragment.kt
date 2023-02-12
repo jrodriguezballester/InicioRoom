@@ -7,9 +7,11 @@ import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.farma4.R
+import com.example.farma4.database.model.MedTope
 import com.example.farma4.database.model.Medicina
 
-class InventarioDialogFragment(private val medicina: Medicina) : DialogFragment() {
+class InventarioDialogFragment(private val medicina: Medicina, private val subList: List<MedTope>) :
+    DialogFragment() {
     // Use this instance of the interface to deliver action events
     internal lateinit var listener: InventarioDialogListener
 
@@ -18,7 +20,8 @@ class InventarioDialogFragment(private val medicina: Medicina) : DialogFragment(
      * Each method passes the DialogFragment in case the host needs to query it. */
     interface InventarioDialogListener {
         fun onDialogPositiveClick(dialog: DialogFragment, numCajas: Int, medicina: Medicina)
-    //    fun onDialogNegativeClick(dialog: DialogFragment)
+        fun mandarMensaje(dialog: Dialog?)
+        //    fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -30,40 +33,43 @@ class InventarioDialogFragment(private val medicina: Medicina) : DialogFragment(
             listener = context as InventarioDialogListener
         } catch (e: ClassCastException) {
             // The activity doesn't implement the interface, throw exception
-            throw ClassCastException((context.toString() +
-                    " must implement InventarioDialogListener"))
+            throw ClassCastException(
+                (context.toString() +
+                        " must implement InventarioDialogListener")
+            )
         }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
-            val listItems = arrayOf("Caja 1", "Caja 2", "Caja 3")
+            val listItems = arrayOf("Caja 1", "Caja 2", "Mandar lista por wasap")
             var numCajas = 1
             builder.setTitle(medicina.name)
             builder.setSingleChoiceItems(listItems, 0) { dialogInterface, i ->
-                when (i){
-                    0,1 ->{
+                when (i) {
+                    0, 1 -> {
                         Log.i("MyTAG Dialog", "pulsado::${i}")
                         numCajas += i
                     }
-                   2 ->{
-                       Log.i("MyTAG Dialog", "pulsadosssss::${i}")
-                       numCajas += i
-                   }
+                    2 -> {
+                        Log.i("MyTAG Dialog", "pulsadosssss::${i}")
+                       listener.mandarMensaje(dialog)
+                        //   numCajas += i
+                    }
                 }
-//                Log.i("MyTAG Dialog", "pulsado::${i}")
-//                numCajas += i
             }
                 .setPositiveButton(R.string.aceptar) { dialog, id ->
                     Log.i("MyTAG Dialog", "numCajas::${numCajas}")
-                   listener.onDialogPositiveClick(this,numCajas,medicina)
+                    listener.onDialogPositiveClick(this, numCajas, medicina)
                 }
                 .setNegativeButton(R.string.cancel) { dialog, id ->
-                  //  listener.onDialogNegativeClick(this)
+                    //  listener.onDialogNegativeClick(this)
                 }
             // Create the AlertDialog object and return it
             builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
+
+
 }
