@@ -3,7 +3,9 @@ package com.example.farma4.ui.tratamiento
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -15,6 +17,8 @@ import com.example.farma4.MyApp
 import com.example.farma4.R
 import com.example.farma4.database.model.Medicina
 import com.example.farma4.databinding.ActivityTratamientoBinding
+import java.util.*
+
 
 class TratamientoActivity : BaseActivity() {
 
@@ -56,6 +60,7 @@ class TratamientoActivity : BaseActivity() {
 
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     private fun initAdapters() {
         adapterDesayuno.setList(getInstance().desayunoList, getInstance().deletedMedicina)
@@ -84,7 +89,7 @@ class TratamientoActivity : BaseActivity() {
 
     private fun initCenaRecyclerView() {
         binding.cenaRecyclerView.layoutManager = GridLayoutManager(this, 2)
-        adapterCena = TratamientoViewAdapter(::listItemClicked)
+        TratamientoViewAdapter(::listItemClicked).also { adapterCena = it }
         binding.cenaRecyclerView.adapter = adapterCena
     }
 
@@ -100,7 +105,7 @@ class TratamientoActivity : BaseActivity() {
         mostrarAlertConDosis(medicina, this)
     }
 
-       /**
+    /**
      * Muestra Alert Diciendo la medicina y la dosis de la misma
      * marca la medicina en cada recycler
      */
@@ -112,7 +117,11 @@ class TratamientoActivity : BaseActivity() {
 
         builder.setItems(items) { dialog, which ->
             when (which) {
-                0, 1, 2, 3 -> {
+                0 -> {
+                    Log.i("MyTAG Inventario", "pulsado MODIFICAR STOCK -${which}--------")
+                    modificarStock(medicina)
+                }
+                1, 2, 3, 4 -> {
                     Log.i("MyTAG Inventario", "pulsado OK -${which}--------")
                     getInstance().deletedMedicina.add(medicina)
                     initAdapters()
@@ -128,8 +137,33 @@ class TratamientoActivity : BaseActivity() {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun modificarStock(medicina: Medicina) {
+
+        val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Introduzca su texto aquí")
+            .setView(input)
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, id ->
+                val newStock: Int = input.text.toString().toInt()
+                medicina.stock = newStock
+                medicina.fechaStock= Date()
+                ttoViewModel.actualizarMedicina(medicina)
+
+                adapterDesayuno.notifyDataSetChanged()
+                adapterComida.notifyDataSetChanged()
+                adapterCena.notifyDataSetChanged()
+                adapterResopon.notifyDataSetChanged()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+
     /**
-     * Calcula el array de String de la dosis del parametro medicina
+     * Calcula el array de String del Alert para cada medicina
      */
     private fun calculaArrayDosis(medicina: Medicina): Array<String> {
         val cero = "0"
@@ -137,6 +171,7 @@ class TratamientoActivity : BaseActivity() {
         var indice = 0
         val items = arrayOf("Desayuno", "Comida", "Cena", "Resopon")
         val arrayDosis: ArrayList<String> = ArrayList<String>()
+        arrayDosis.add("Modificar Stock")
         for (num in medicina.dosis) {
             if (num != ceroChar) {
                 when (indice) {
@@ -150,6 +185,7 @@ class TratamientoActivity : BaseActivity() {
             indice += 1
             Log.i("MyTAG calculaArrayDosis", "${arrayDosis.toString()}-------")
         }
+
         val array = arrayDosis.toTypedArray()
         return array
     }
@@ -163,7 +199,7 @@ class TratamientoActivity : BaseActivity() {
             for (medicina in it) {
                 Log.i("MyTAG __", "${medicina.name}, dosis ${medicina.dosis}::")
                 var indice = 0
-                val cero: String = "0"
+                val cero = "0"
                 val ceroChar = cero[0]
 
                 for (num in medicina.dosis) {

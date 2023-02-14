@@ -26,10 +26,10 @@ class InventarioViewModel(private val repository: MedicinaRepository) : ViewMode
             "Antes update ${medicina.name},${medicina.principio},${medicina.dosis},${medicina.unidadesCaja},${medicina.stock},${medicina.fechaStock},"
         )
         val numComprimidosASumar = medicina.unidadesCaja * numCajas
-        val stockActual= calcularStock(medicina)
+        val stockActual = calcularStock(medicina)
 
-        medicina.stock = stockActual+numComprimidosASumar
-        medicina.fechaStock=Date()
+        medicina.stock = stockActual + numComprimidosASumar
+        medicina.fechaStock = Date()
 
         updateMedicina(medicina)
     }
@@ -44,5 +44,4 @@ class InventarioViewModel(private val repository: MedicinaRepository) : ViewMode
             }
         }
     }
-
 }

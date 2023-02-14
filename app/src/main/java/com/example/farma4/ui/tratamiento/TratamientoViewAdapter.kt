@@ -31,9 +31,6 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
         this.deletedMedicina = deletedMedicina
     }
 
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TratamientoViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemTratamientoBinding =
@@ -60,21 +57,26 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
         deletedMedicina: ArrayList<Medicina>,
     ) {
         if (isFirstItem) dimensionarItem()
+
         if (medicina in deletedMedicina) {
             binding.imagePreparado.visibility = View.VISIBLE
         } else {
             binding.imagePreparado.visibility = View.GONE
         }
 
-        val consumo = Utilidades.calcularConsumoDiario(medicina.dosis)
-        val nuevoStock = Utilidades.calcularStock(medicina, consumo)
-        val cardColor: Int = Utilidades.calcularColor(context, consumo, nuevoStock, medicina)
+            val consumo = Utilidades.calcularConsumoDiario(medicina.dosis)
+           val nuevoStock = Utilidades.calcularStock(medicina, consumo)
+        //   val cardColor: Int = Utilidades.calcularColor(context, consumo, nuevoStock, medicina)
+        Log.i("MY TAG ___", "${medicina.name} :: Stock $nuevoStock :: 0- 2 -> Rojo 2-3-> amarillo 3-4->verde")
+        val cardColor: Int = Utilidades.calcularColor(context, medicina)
 
 
         binding.cardView.setCardBackgroundColor(cardColor)
         binding.nameTextView.text = medicina.name
         binding.dosisTextView.text = medicina.dosis
         binding.principioText.text = medicina.principio
+    //    binding.compText.text = medicina.stock.toString()
+        binding.compText.text = Utilidades.calcularStock(medicina).toString()
 
         binding.listItemLayout.setOnClickListener {
             clickListener(medicina)
@@ -96,6 +98,9 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
         params.bottomMargin = 30  //pixels 10dp=50pixels
         params.width = cardViewWidth
         binding.linearlayout1.layoutParams = params
+        //     binding.linearlayout2.layoutParams = params
+        //     binding.linearlayout3.layoutParams = params
+
     }
 
 }
