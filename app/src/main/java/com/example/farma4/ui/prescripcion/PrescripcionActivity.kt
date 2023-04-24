@@ -1,17 +1,16 @@
 package com.example.farma4.ui.prescripcion
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.farma4.BaseActivity
 import com.example.farma4.MyApp
 import com.example.farma4.R
 import com.example.farma4.databinding.ActivityPrescripcionBinding
-import com.example.farma4.ui.medicamentos.MedicamentosViewModel
 
-class PrescripcionActivity : AppCompatActivity() {
+class PrescripcionActivity : BaseActivity() {
 
     private lateinit var adapter: PrescripcionViewAdapter
     private lateinit var binding: ActivityPrescripcionBinding

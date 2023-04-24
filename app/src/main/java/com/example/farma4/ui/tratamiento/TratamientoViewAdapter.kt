@@ -23,7 +23,7 @@ class TratamientoViewAdapter(private val clickListener: (Medicina) -> Unit) :
     RecyclerView.Adapter<TratamientoViewHolder>() {
 
     private val medicinasList = ArrayList<Medicina>()
-    var deletedMedicina = ArrayList<Medicina>()
+    private var deletedMedicina = ArrayList<Medicina>()
 
     fun setList(medicinaList: List<Medicina>, deletedMedicina: ArrayList<Medicina>) {
         medicinasList.clear()
@@ -56,26 +56,35 @@ class TratamientoViewHolder(val binding: ListItemTratamientoBinding, val context
         medicina: Medicina, clickListener: (Medicina) -> Unit,
         deletedMedicina: ArrayList<Medicina>,
     ) {
+        // Determinamos el tamaño para mostrar 2 medicinas por fila
         if (isFirstItem) dimensionarItem()
 
+        // No mostramos las medicinas eliminadas
         if (medicina in deletedMedicina) {
             binding.imagePreparado.visibility = View.VISIBLE
         } else {
             binding.imagePreparado.visibility = View.GONE
         }
 
-            val consumo = Utilidades.calcularConsumoDiario(medicina.dosis)
-           val nuevoStock = Utilidades.calcularStock(medicina, consumo)
+        val consumo = Utilidades.calcularConsumoDiario(medicina.dosis)
+        val nuevoStock = Utilidades.calcularStock(medicina, consumo)
         //   val cardColor: Int = Utilidades.calcularColor(context, consumo, nuevoStock, medicina)
-        Log.i("MY TAG ___", "${medicina.name} :: Stock $nuevoStock :: 0- 2 -> Rojo 2-3-> amarillo 3-4->verde")
+        Log.i(            "MY TAG ___",
+            "${medicina.name} :: Stock $nuevoStock :: 0- 2 -> Rojo 2-3-> amarillo 3-4->verde"
+        )
         val cardColor: Int = Utilidades.calcularColor(context, medicina)
 
 
         binding.cardView.setCardBackgroundColor(cardColor)
         binding.nameTextView.text = medicina.name
-        binding.dosisTextView.text = medicina.dosis
+        if (medicina.name.length>12) binding.nameTextView.textSize = 22f
+        //     binding.dosisTextView.text = medicina.dosis
+
+        val dosisFraccionada = Utilidades.escribirDosisEnFracciones(medicina.dosis)
+        binding.dosisTextView.text = dosisFraccionada
+
         binding.principioText.text = medicina.principio
-    //    binding.compText.text = medicina.stock.toString()
+        //    binding.compText.text = medicina.stock.toString()
         binding.compText.text = Utilidades.calcularStock(medicina).toString()
 
         binding.listItemLayout.setOnClickListener {

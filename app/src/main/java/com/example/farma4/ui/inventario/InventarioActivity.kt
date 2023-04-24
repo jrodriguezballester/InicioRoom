@@ -31,11 +31,11 @@ class InventarioActivity : BaseActivity(), InventarioDialogFragment.InventarioDi
         val factory = InventarioViewModelFactory(MyApp.medicinaRepository!!)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_inventario)
-        inventarioViewModel = ViewModelProvider(this, factory).get(InventarioViewModel::class.java)
+        inventarioViewModel = ViewModelProvider(this, factory)[InventarioViewModel::class.java]
         //Observar mensajes
-        inventarioViewModel.message.observe(this) { it ->
+        inventarioViewModel.message.observe(this) {
             it.getContentIfNotHandled()?.let { its ->
-                Log.i("MyTAG", "toast ${its}")
+                Log.i("MyTAG", "toast $its")
                 Toast.makeText(this, its, Toast.LENGTH_LONG).show()
             }
         }
@@ -59,13 +59,9 @@ class InventarioActivity : BaseActivity(), InventarioDialogFragment.InventarioDi
     @SuppressLint("NotifyDataSetChanged")
     private fun displayMedicinasList2() {
         val myList = mutableListOf<MedTope>()
-        inventarioViewModel.getSavedMedicinas().observe(this) {
+        inventarioViewModel.getSavedMedicinas().observe(this) { it ->
             myList.clear()
             for (medicina in it) {
-                //     val consumoDiario = Utilidades.calcularConsumoDiario(medicina.dosis)
-                //     val consumoSemanal: Double = (consumoDiario * 7)
-                //     val actualStock = Utilidades.calcularStock(medicina, consumoDiario)
-                //     val fechaFinal: String = Utilidades.calcularDiasFinStock(consumoDiario, actualStock)
 
                 val numSemanas: Double = Utilidades.calcularNumSemanas(medicina)
                 val fechaFinal: String = Utilidades.calcularDiasFinStock(medicina)
@@ -81,7 +77,7 @@ class InventarioActivity : BaseActivity(), InventarioDialogFragment.InventarioDi
     }
 
 
-    fun showdialog(medicina: Medicina) {
+    private fun showdialog(medicina: Medicina) {
         val newFragment = InventarioDialogFragment(medicina, subList)
         newFragment.show(supportFragmentManager, "game")
     }
@@ -94,17 +90,12 @@ class InventarioActivity : BaseActivity(), InventarioDialogFragment.InventarioDi
     override fun mandarMensaje(dialog: Dialog?) {
         Log.i("MyTAG __Inventario", "captura")
 
-//  //      debug
-//        val listaAComprar = subList.map { it.medicina.name }
-//        Log.i("MyTAG __Inventario", "message::$listaAComprar")
-
         val phoneNumber = "+34605011868" // Número de teléfono del destinatario
 
         val urgentes = subList.filter { it.numSemanas <= 2 }.map { it.medicina.name }
         val resto = subList.filter { it.numSemanas > 2 }.map { it.medicina.name }
 
-        val message = "Falta Comprar Urgente:\n $urgentes \n y si salen:\n $resto"
-
+        val message = "(Josito`s App)\n Falta Comprar esta semana:\n $urgentes \n y si salen:\n $resto \n  Besitos"
 
         Log.i("MyTAG __Inventario", "lanzar wasap")
         val intent = Intent(

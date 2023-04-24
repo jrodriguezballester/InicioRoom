@@ -1,7 +1,6 @@
 package com.example.farma4.ui.inicial
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +14,9 @@ import com.example.farma4.ui.medicamentos.MedicamentosActivity
 import com.example.farma4.ui.prescripcion.PrescripcionActivity
 import com.example.farma4.ui.tratamiento.TratamientoActivity
 
+/**
+ * Muestra un menu inicial para saltar a las distintas activitys
+ */
 class InicialActivity : AppCompatActivity() {
 
     private lateinit var inicialViewModel: InicialViewModel
@@ -24,7 +26,7 @@ class InicialActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inicial)
 
-        inicialViewModel = ViewModelProvider(this).get(InicialViewModel::class.java)
+        inicialViewModel = ViewModelProvider(this)[InicialViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_inicial)
         // Bind layout with ViewModel (enlaza con el xml)
         binding.myViewModel = inicialViewModel
@@ -33,7 +35,7 @@ class InicialActivity : AppCompatActivity() {
      //   inicialViewModel.iniciarBD(this)
         Log.i("MyTAG", "InicialActivity valor::${inicialViewModel.cambioActivity.value.toString()}")
         inicialViewModel.cambioActivity.observe(this) {
-            Log.i("MyTAG", "valor: ${it}")
+            Log.i("MyTAG", "valor: $it")
             when (it) {
                 // medicamentos
                 1 -> startActivity<MedicamentosActivity>()
@@ -47,10 +49,10 @@ class InicialActivity : AppCompatActivity() {
         }
     }
 
-    inline fun <reified T : Activity> Context.createIntent() =
+    inline fun <reified T : Activity> createIntent() =
         Intent(this, T::class.java)
 
-    inline fun <reified T : Activity> Activity.startActivity() {
+    inline fun <reified T : Activity> startActivity() {
         startActivity(createIntent<T>())
     }
 

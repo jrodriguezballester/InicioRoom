@@ -12,16 +12,35 @@ import java.util.*
 
 class Utilidades {
     companion object {
+        /// ESCRIBIR DOSIS ///
 
-    //// CALCULOS ////
+        fun escribirDosisEnFracciones(dosis: String): String {
+            lateinit var dosisConFraccion: String
+            for ((index, num) in dosis.withIndex()) {
+                var charDosis: String = num.toString()
+                if (num == '5') charDosis = '\u00BD'.toString()
+                if (num == '7') charDosis = "(1\u00BD)"
+                if (index == 0)
+                    dosisConFraccion = charDosis
+                else
+                    dosisConFraccion += charDosis
+            }
+            return dosisConFraccion
+        }
+
+        //// CALCULOS ////
 
         fun calcularConsumoDiario(dosis: String): Double {
             Log.i("MyTAG", "dosis ${dosis}::")
             var numComprimidosDiarios = 0.0
             var numComprimidosDosis: Double
             for (num in dosis) {
-                numComprimidosDosis =
-                    if (num.digitToInt() == 5) 0.5 else num.digitToInt().toDouble()
+
+                numComprimidosDosis = if (num.digitToInt() == 5) 0.5
+                else {
+                    if (num.digitToInt() == 7) 1.5
+                    else num.digitToInt().toDouble()
+                }
 
                 numComprimidosDiarios += numComprimidosDosis
             }
@@ -34,7 +53,7 @@ class Utilidades {
             val stock: Int = medicina.stock - (dias * consumoDiario).toInt()
             Log.i(
                 "MyTAG",
-                "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock ${stock}"
+                "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock $stock"
             )
             return stock
         }
@@ -45,11 +64,9 @@ class Utilidades {
             val stock: Int = medicina.stock - (dias * consumoDiario).toInt()
             Log.i(
                 "MyTAG",
-                "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock ${stock}"
+                "stock Inicial ${medicina.stock} Consumido ${dias * consumoDiario}  nuevo stock $stock"
             )
             return stock
-
-
         }
 
         fun calculoPeriodoStock(fechaStock: Date): Int {
@@ -60,24 +77,35 @@ class Utilidades {
         }
 
         fun calcularDiasFinStock(consumoDiario: Double, nuevoStock: Int): String {
-            val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
-            val today = Date()
-            val calendar: Calendar = Calendar.getInstance()
-            calendar.time = today
-            calendar.add(Calendar.DATE, numDias)
-            val fechaFinal = dateToString(calendar.time)
-            return fechaFinal
+            return try {
+
+                val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
+                val today = Date()
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.time = today
+                calendar.add(Calendar.DATE, numDias)
+                val fechaFinal = dateToString(calendar.time)
+                fechaFinal
+            } catch (e: Exception) {
+                dateToString(Date())
+            }
+
         }
+
         fun calcularDiasFinStock(medicina: Medicina): String {
-           val nuevoStock:Int = calcularStock(medicina)
-            val consumoDiario= calcularConsumoDiario(medicina.dosis)
-            val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
-            val today = Date()
-            val calendar: Calendar = Calendar.getInstance()
-            calendar.time = today
-            calendar.add(Calendar.DATE, numDias)
-            val fechaFinal = dateToString(calendar.time)
-            return fechaFinal
+            return try {
+                val nuevoStock: Int = calcularStock(medicina)
+                val consumoDiario = calcularConsumoDiario(medicina.dosis)
+                val numDias: Int = roundOffZeroDecimalDown((nuevoStock / consumoDiario)).toInt()
+                val today = Date()
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.time = today
+                calendar.add(Calendar.DATE, numDias)
+                val fechaFinal = dateToString(calendar.time)
+                fechaFinal
+            } catch (e: Exception) {
+                dateToString(Date())
+            }
         }
 
 
@@ -91,8 +119,7 @@ class Utilidades {
         //// COLORES ////
 
         fun calcularColorTto(context: Context, dias: Long): Int {
-            val colorDeFondo: Int
-            colorDeFondo = when (dias) {
+            val colorDeFondo: Int = when (dias) {
 
                 in 0..30 -> ContextCompat.getColor(context, R.color.FireBrick)
                 in 31..70 -> ContextCompat.getColor(context, R.color.Gold)
@@ -121,25 +148,31 @@ class Utilidades {
 
             return colorDeFondo
         }
+
         fun calcularColor(context: Context, medicina: Medicina): Int {
             val colorDeFondo: Int
-            val numSemanas: Double = calcularStock(medicina) / (calcularConsumoDiario(medicina.dosis) * 7)
+            val numSemanas: Double =
+                calcularStock(medicina) / (calcularConsumoDiario(medicina.dosis) * 7)
             Log.i(
                 "MyTAG ___ ",
-                " ${medicina.name}::stock:${calcularStock(medicina)} consumo:${calcularConsumoDiario(medicina.dosis)}::numSemanas${numSemanas}"
+                " ${medicina.name}::stock:${calcularStock(medicina)} consumo:${
+                    calcularConsumoDiario(
+                        medicina.dosis
+                    )
+                }::numSemanas${numSemanas}"
             )
             colorDeFondo = when {
                 numSemanas < 0 -> ContextCompat.getColor(context, R.color.DarkRed)
                 numSemanas in 0.0..1.0 -> ContextCompat.getColor(context, R.color.Red)
                 numSemanas in 1.0..2.0 -> ContextCompat.getColor(context, R.color.Red)
                 numSemanas in 2.0..3.0 -> ContextCompat.getColor(context, R.color.Gold)
-                numSemanas  in 3.0..4.0 -> ContextCompat.getColor(context, R.color.LimeGreen)
+                numSemanas in 3.0..4.0 -> ContextCompat.getColor(context, R.color.LimeGreen)
                 else -> ContextCompat.getColor(context, R.color.DarkGray)
             }
 
             return colorDeFondo
         }
-    //// NUMEROS ////
+        //// NUMEROS ////
 
         fun roundOffOneDecimal(number: Double): String {
             val df = DecimalFormat("#.#")
@@ -159,7 +192,7 @@ class Utilidades {
             return df.format(number)
         }
 
-    //// FECHAS ////
+        //// FECHAS ////
 
         fun stringToDate(fechaString: String) =
             SimpleDateFormat("dd-MM-yy", Locale.getDefault()).parse(fechaString) as Date

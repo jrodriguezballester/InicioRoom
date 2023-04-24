@@ -19,7 +19,7 @@
     <item
         android:id="@+id/itemInventario"
         android:title="Inventario"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="never"/>
 
 
 </menu>

@@ -18,10 +18,4 @@ class DatosSingleton private constructor() {
             return INSTANCE!!
         }
     }
-//    fun setData(data: String) {
-//        this.data = data
-//    }
-//    fun getData(): String {
-//        return data
-//    }
 }

@@ -27,32 +27,36 @@ class InicialViewModel() : ViewModel() {
         cambioActivity.value = 1
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
+
     fun toTratamiento() {
         Log.i("MyTAG InicialActivity", "pulsado toTratamiento")
         cambioActivity.value = 2
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
 
     }
+
     fun toInventario() {
         Log.i("MyTAG InicialActivity", "pulsado toInventario()")
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
         cambioActivity.value = 3
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
+
     fun toAddStock() {
         Log.i("MyTAG InicialActivity", "pulsado toAddStock()")
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
         cambioActivity.value = 4
         Log.i("MyTAG InicialActivity toAddMedicina()", "valor::${cambioActivity.value.toString()}")
     }
-    fun iniciarBD(context:Context) {
+
+    fun iniciarBD(context: Context) {
         val medicinaDAO = MedicinaDatabase.getInstance(context).medicinaDAO
-        var myFlow= medicinaDAO.getAllMedicinas()
-        myFlow.onCompletion{
-            Log.i("MyTAG MenuActivity", "myFlow::${ myFlow}")
+        val myFlow = medicinaDAO.getAllMedicinas()
+        myFlow.onCompletion {
+            Log.i("MyTAG MenuActivity", "myFlow::${myFlow}")
 
         }
-        Log.i("MyTAG MenuActivity", "fin::${ medicinaDAO.getAllMedicinas()}")
+        Log.i("MyTAG MenuActivity", "fin::${medicinaDAO.getAllMedicinas()}")
 
     }
 }

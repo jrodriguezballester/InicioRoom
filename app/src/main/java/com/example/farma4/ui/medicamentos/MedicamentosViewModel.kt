@@ -3,11 +3,10 @@ package com.example.farma4.ui.medicamentos
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.farma4.Utilities.Event
+import com.example.farma4.Utilities.Utilidades
 import com.example.farma4.database.MedicinaRepository
 import com.example.farma4.database.model.MapperImpl
-import com.example.farma4.database.model.MedForm
 import com.example.farma4.database.model.Medicina
-import com.example.farma4.Utilities.Utilidades
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -16,7 +15,6 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
 
 
     private lateinit var medicina: Medicina
-    private lateinit var medForm: MedForm
     lateinit var medClicked: Medicina
     private val _mensaje = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = _mensaje
@@ -40,7 +38,8 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
     var fecFinTtoDate = MutableLiveData<Date>()
     val fecStockDate = MutableLiveData<Date>()
 
-    lateinit var listadoMedicamentos: List<Medicina>
+    private val _formularioVisible = MutableLiveData(false)
+    val formularioVisible: LiveData<Boolean> = _formularioVisible
 
     var clickado = false
 
@@ -104,6 +103,16 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
             deleteMedicina(medicina)
             clickado = false
         }
+
+    }
+
+    fun cambiarVisibilidadLinearLayout(visible: Boolean) {
+        _formularioVisible.value=visible
+    }
+
+    fun closeButton() {
+        Log.i("MyTAG", "close clickado")
+        cambiarVisibilidadLinearLayout(false)
     }
 
     /**
@@ -120,7 +129,7 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         val unidadesCaja: Int = inputUnidadesCaja.value!!.toInt()
         val fecIniTto: Date = fecIniTtoDate.value!!
         val fecFinTto: Date = fecFinTtoDate.value!!
-        val stock: Int = inputDosis.value!!.toInt()
+        val stock: Int = inputStock.value!!.toInt()
         val fecStoch: Date = fecStockDate.value!!
 
         return Medicina(name, principio, dosis, unidadesCaja, stock, fecStoch, fecIniTto, fecFinTto)
@@ -136,7 +145,7 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
         // Validando entrada datos
         if (inputName.value.isNullOrEmpty()) {
             _mensaje.value = Event("Please enter name")
-            _mensajeError.value="Please enter name"
+            _mensajeError.value = "Please enter name"
             numberLabelError.value = 1
         } else if (inputPrincipio.value.isNullOrEmpty()) _mensaje.value =
             Event("Please enter principio")
@@ -187,32 +196,6 @@ class MedicamentosViewModel(val repository: MedicinaRepository) : ViewModel() {
 
         return validado
     }
-//    fun validate(view: View?) {
-//        var mailError: String? = null
-//        if (TextUtils.isEmpty(editTextEmail.getText())) {
-//            mailError = getString(R.string.mandatory)
-//        }
-//        toggleTextInputLayoutError(textInputEmail, mailError)
-//        var passError: String? = null
-//        if (TextUtils.isEmpty(editTextPassword.getText())) {
-//            passError = getString(R.string.mandatory)
-//        }
-//        toggleTextInputLayoutError(textInputPassword, passError)
-//        clearFocus()
-//    }
-//
-//    /**
-//     * Display/hides TextInputLayout error.
-//     *
-//     * @param msg the message, or null to hide
-//     */
-//    private fun toggleTextInputLayoutError(
-//        textInputLayout: TextInputLayout,
-//        msg: String?
-//    ) {
-//        textInputLayout.error = msg
-//        textInputLayout.isErrorEnabled = msg != null
-//    }
 
 
     private fun insertMedicina(medicina: Medicina) {

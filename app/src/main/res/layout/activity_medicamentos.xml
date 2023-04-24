@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.medicamentos.MedicamentosActivity">
 
@@ -23,24 +22,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <com.google.android.material.textfield.TextInputLayout
-               android:layout_marginVertical="@dimen/marginVertical"
-                android:id="@+id/text_input_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="nombre medicamento">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_text"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_marginVertical="@dimen/marginVertical"
+                    android:id="@+id/text_input_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:text="@={myViewModel.inputName}"
-                    android:textStyle="bold" />
+                    android:hint="nombre medicamento">
 
-            </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:text="@={myViewModel.inputName}"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <ImageView
+                    android:id="@+id/close_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+                    android:clickable="true"
+                    android:src="@drawable/ic_close_foreground"
+                    android:onClick="@{()->myViewModel.closeButton()}" />
+
+            </FrameLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
