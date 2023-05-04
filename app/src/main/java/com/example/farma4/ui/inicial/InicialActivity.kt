@@ -16,6 +16,7 @@ import com.example.farma4.ui.tratamiento.TratamientoActivity
 
 /**
  * Muestra un menu inicial para saltar a las distintas activitys
+ * iniciando navdrawer
  */
 class InicialActivity : AppCompatActivity() {
 
